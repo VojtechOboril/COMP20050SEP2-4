@@ -1,3 +1,5 @@
 public class test {
-    123test
+    test() {
+        // fixed the error
+    }
 }
