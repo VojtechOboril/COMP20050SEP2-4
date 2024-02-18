@@ -30,10 +30,10 @@ public class MenuScreen extends JPanel {
                 System.exit(0);
             }
         });
-        newGameButton.setBounds(150,120,100,50);
-        quitButton.setBounds(250,120,100,50);
+        newGameButton.setBounds(125,200,100,50);
+        quitButton.setBounds(275,200,100,50);
 
-        this.setBackground(Color.PINK);
+        this.setBackground(Color.BLACK);
         this.add(newGameButton);
         this.add(quitButton);
 
