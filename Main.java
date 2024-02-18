@@ -9,8 +9,9 @@ public class Main {
     private CardLayout cardLayout;
 
     public Main() {
-        frame = new JFrame("Bkack Box game");
+        frame = new JFrame("Black Box game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         cardPanel = new JPanel();
         cardLayout = new CardLayout();

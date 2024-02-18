@@ -1,13 +1,12 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
+
 
 
 public class Hexagon
 {
-    private Hexagon() {
+    public Hexagon() {
         initGame();
         createAndShowGUI();
     }
@@ -261,10 +260,10 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
         Polygon poly = hex(x,y);
-        g2.setColor(hexgame.COLOURCELL);
+        g2.setColor(Hexagon.COLOURCELL);
         //g2.fillPolygon(hexmech.hex(x,y));
         g2.fillPolygon(poly);
-        g2.setColor(hexgame.COLOURGRID);
+        g2.setColor(Hexagon.COLOURGRID);
         g2.drawPolygon(poly);
     }
 
@@ -286,17 +285,17 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         int x = i * (s+t);
         int y = j * h + (i%2) * h/2;
         if (n < 0) {
-            g2.setColor(hexgame.COLOURONE);
+            g2.setColor(Hexagon.COLOURONE);
             g2.fillPolygon(hex(x,y));
-            g2.setColor(hexgame.COLOURONETXT);
+            g2.setColor(Hexagon.COLOURONETXT);
             c = (char)(-n);
             g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4); //FIXME: handle XYVertex
             //g2.drawString(x+","+y, x+r+BORDERS, y+r+BORDERS+4);
         }
         if (n > 0) {
-            g2.setColor(hexgame.COLOURTWO);
+            g2.setColor(Hexagon.COLOURTWO);
             g2.fillPolygon(hex(x,y));
-            g2.setColor(hexgame.COLOURTWOTXT);
+            g2.setColor(Hexagon.COLOURTWOTXT);
             c = (char)n;
             g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4); //FIXME handle XYVertex
             //g2.drawString(i+","+j, x+r+BORDERS, y+r+BORDERS+4);

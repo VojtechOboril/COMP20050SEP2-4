@@ -1,6 +1,6 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import java.awt.CardLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -14,7 +14,7 @@ public class EndScreen extends JPanel {
                 cardLayout.show(cardPanel, "MenuScreen");
             }
         });
-
+        this.setBackground(Color.BLACK);
         this.add(menuButton); 
     }
     
