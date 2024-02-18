@@ -30,6 +30,7 @@ public class MenuScreen extends JPanel {
                 System.exit(0);
             }
         });
+        //s
         newGameButton.setBounds(125,200,100,50);
         quitButton.setBounds(275,200,100,50);
 
