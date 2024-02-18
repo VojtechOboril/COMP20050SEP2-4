@@ -6,11 +6,13 @@ import java.awt.event.ActionEvent;
 
 public class MenuScreen extends JPanel {
     public MenuScreen(CardLayout cardLayout, JPanel cardPanel) {
-        cardPanel.setBackground(Color.BLACK);
+        setLayout(null);
+
+        cardPanel.setBackground(Color.PINK);
         JButton newGameButton = new JButton("New Game");
         JButton quitButton = new JButton("Quit");
 
-        newGameButton.setLayout(null);
+        //newGameButton.setLayout(null);
         newGameButton.setBackground(Color.green);
         quitButton.setBackground(Color.red);
 
@@ -28,8 +30,10 @@ public class MenuScreen extends JPanel {
                 System.exit(0);
             }
         });
+        newGameButton.setBounds(150,120,100,50);
+        quitButton.setBounds(250,120,100,50);
 
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.PINK);
         this.add(newGameButton);
         this.add(quitButton);
 

@@ -24,7 +24,7 @@ public class Main {
         cardLayout.show(cardPanel, "MenuScreen");
         frame.add(cardPanel, BorderLayout.CENTER);
 
-        frame.setSize(400, 400);
+        frame.setSize(500, 500);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);   
     }
@@ -36,5 +36,6 @@ public class Main {
                 new Main();
             }
         });
+
     }
 }
