@@ -145,7 +145,7 @@ public class Hexagon
     } // end of DrawingPanel class
 }
 
-
+//s
 
 /* This is a companion class to hexgame.java. It handles all of the mechanics related to hexagon grids. */
 
