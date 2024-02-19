@@ -1,6 +1,4 @@
 import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
 
 
 
@@ -9,23 +7,21 @@ public class Hexagon
     // adjacent hexagons
     // north, north east, south east, south, south west, north west
     private Hexagon n, ne, se, s, sw, nw;
-    // How far from center of the board is it? used for generation of a board
-    private final int depth;
     // Coordinates of this hexagon
     private Point p;
     // 3 number coordinates of this hexagon - used for generation
-    private final int x, y, z;
-
+    public final int x, y, z;
+    // What should be displayed when clicked?
     private int value;
 
-    public Hexagon(int depth, int x, int y, int z) {
-        this.depth = depth;
+    public Hexagon(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
     public Hexagon getAdjacent() {
+        // TODO
         return null;
     }
 
@@ -56,17 +52,23 @@ public class Hexagon
         }
     }
 
+    /**
+     * @return Position in offset coordinates
+     */
     public Point getPosition() {
         return this.p;
     }
 
     public void convertPosition(int bsize) {
         int yOffset;
-        if(this.z < this.x) {
-            yOffset = (this.x-this.z)/2;
-        } else {
+        if(this.z > this.x && (bsize/2)%2 == 0) {
             // -1 here acts as ceiling function, because the board is a bit biased to higher numbers(bottom right y coordinates are 6 6 7 7 8)
             yOffset = (this.x-this.z - 1)/2;
+        } else if (this.z < this.x && (bsize/2)%2 == 1) {
+            // +1 here is again a floor-ish function, and it is divided like this, because 4n+1 sized boards behave a bit differently than 4n+3 sized boards
+            yOffset = (this.x-this.z + 1)/2;
+        } else {
+            yOffset = (this.x-this.z)/2;
         }
         this.p = new Point(bsize/2 + this.y, bsize/2 + yOffset);
     }

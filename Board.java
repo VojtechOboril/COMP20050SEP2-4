@@ -18,9 +18,10 @@ public class Board extends JPanel {
 
         this.add(newGameButton);
     }
-    final static int EMPTY = 0;
+    // Leaving empty in for debug reasons
+    // final static int EMPTY = 0;
 
-    final static int BSIZE = 9; //board size. controls the number hexagons
+    final static int BSIZE = 13; //board size. controls the number hexagons. Only works with odd numbers
     final static Color COLOURBACK =  Color.WHITE;
     final static Color COLOURCELL =  Color.ORANGE;
     final static Color COLOURGRID =  Color.BLACK;
@@ -41,27 +42,35 @@ public class Board extends JPanel {
         Hexmech.setHeight(HEXSIZE); //Either setHeight or setSize must be run to initialize the hex
         Hexmech.setBorders(BORDERS);
 
-        int totalTiles = 0;
         int depth = 0;
-        hBoard[BSIZE/2][BSIZE/2] = new Hexagon(0, 0, 0, 0);
-        totalTiles++;    // Center
-        System.out.printf("Current size (after depth=%d) = %d\n", depth, totalTiles);
+        // Create a center tile
+        hBoard[BSIZE/2][BSIZE/2] = new Hexagon(0, 0, 0);
+        // Cube coordinates for each direction
+        // https://www.redblobgames.com/grids/hexagons/
         final int[][] sides = {{1, 0, -1}, {0, 1, -1}, {-1, 1, 0}, {-1, 0, 1}, {0, -1, 1}, {1, -1, 0}};
+        // Layer by layer
         for (depth=1; depth<=BSIZE/2; depth++) {
+            // Side by side(n -> ne -> ... -> nw)
             for (int side=1; side<=6; side++) {
-                for (int tile=1; tile<=depth; tile++){
+                // For each tile on that side
+                for (int tile=1; tile<=depth; tile++) {
+                    // Get its cube coordinates
                     int x = sides[side - 1][0] * depth + sides[(side + 1)%6][0] * (tile - 1);
                     int y = sides[side - 1][1] * depth + sides[(side + 1)%6][1] * (tile - 1);
                     int z = sides[side - 1][2] * depth + sides[(side + 1)%6][2] * (tile - 1);
-                    Hexagon h = new Hexagon(depth, x, y, z);
+                    Hexagon h = new Hexagon(x, y, z);
+                    // Convert those cube coordinates to offset coordinates
                     h.convertPosition(BSIZE);
                     Point p = h.getPosition();
+                    if(hBoard[p.x][p.y] != null) {
+                        Hexagon g = hBoard[p.x][p.y];
+                        System.out.println(String.format("%d %d %d and %d %d %d have the same point %d %d", x, y, z, g.x, g.y, g.z, p.x, p.y));
+                    }
+                    // Add it to the board
                     hBoard[p.x][p.y] = h;
                     // TODO: link them
-                    totalTiles++;
                 }
             } 
-                System.out.printf("Current size (after depth=%d) = %d\n", depth, totalTiles);
         }
 
         //set up board here
@@ -115,8 +124,6 @@ public class Board extends JPanel {
                     if(hBoard[i][j] != null) Hexmech.drawHex(i, j, g2);
                 }
             }
-
-
 
 
             //fill in hexes
