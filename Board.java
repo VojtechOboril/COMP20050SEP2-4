@@ -32,7 +32,7 @@ public class Board extends JPanel {
     final static int BORDERS = 15;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
 
-    int[][] board = new int[BSIZE][BSIZE];
+    Hexagon[][] hBoard = new Hexagon[BSIZE][BSIZE];
 
     void initGame(){
 
@@ -41,10 +41,27 @@ public class Board extends JPanel {
         Hexmech.setHeight(HEXSIZE); //Either setHeight or setSize must be run to initialize the hex
         Hexmech.setBorders(BORDERS);
 
-        for (int i=0;i<BSIZE;i++) {
-            for (int j=0;j<BSIZE;j++) {
-                board[i][j]=EMPTY;
-            }
+        int totalTiles = 0;
+        int depth = 0;
+        hBoard[BSIZE/2][BSIZE/2] = new Hexagon(0, 0, 0, 0);
+        totalTiles++;    // Center
+        System.out.printf("Current size (after depth=%d) = %d\n", depth, totalTiles);
+        final int[][] sides = {{1, 0, -1}, {0, 1, -1}, {-1, 1, 0}, {-1, 0, 1}, {0, -1, 1}, {1, -1, 0}};
+        for (depth=1; depth<=BSIZE/2; depth++) {
+            for (int side=1; side<=6; side++) {
+                for (int tile=1; tile<=depth; tile++){
+                    int x = sides[side - 1][0] * depth + sides[(side + 1)%6][0] * (tile - 1);
+                    int y = sides[side - 1][1] * depth + sides[(side + 1)%6][1] * (tile - 1);
+                    int z = sides[side - 1][2] * depth + sides[(side + 1)%6][2] * (tile - 1);
+                    Hexagon h = new Hexagon(depth, x, y, z);
+                    h.convertPosition(BSIZE);
+                    Point p = h.getPosition();
+                    hBoard[p.x][p.y] = h;
+                    // TODO: link them
+                    totalTiles++;
+                }
+            } 
+                System.out.printf("Current size (after depth=%d) = %d\n", depth, totalTiles);
         }
 
         //set up board here
@@ -92,11 +109,10 @@ public class Board extends JPanel {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
             super.paintComponent(g2);
 
-
             //draw grid
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    Hexmech.drawHex(i, j, g2);
+                    if(hBoard[i][j] != null) Hexmech.drawHex(i, j, g2);
                 }
             }
 
@@ -106,9 +122,7 @@ public class Board extends JPanel {
             //fill in hexes
             for (int i=0;i<BSIZE;i++) {
                 for (int j=0;j<BSIZE;j++) {
-                    //if (board[i][j] < 0) Hexmech.fillHex(i,j,-board[i][j],g2);
-                    //if (board[i][j] > 0) Hexmech.fillHex(i,j, board[i][j],g2);
-                    Hexmech.fillHex(i,j,board[i][j],g2);
+                    if(hBoard[i][j] != null) Hexmech.fillHex(i,j,hBoard[i][j].getValue(),g2);
                 }
             }
 
@@ -134,7 +148,7 @@ public class Board extends JPanel {
 				} */
 
                 //What do you want to do when a hexagon is clicked?
-                board[p.x][p.y] = (int)'•';
+                hBoard[p.x][p.y].clicked();
                 repaint();
             }
         } //end of MyMouseListener class
