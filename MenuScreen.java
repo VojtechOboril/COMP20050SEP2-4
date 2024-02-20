@@ -8,13 +8,14 @@ public class MenuScreen extends JPanel {
     public MenuScreen(CardLayout cardLayout, JPanel cardPanel) {
         setLayout(null);
 
-        cardPanel.setBackground(Color.PINK);
         JButton newGameButton = new JButton("New Game");
         JButton quitButton = new JButton("Quit");
 
-        //newGameButton.setLayout(null);
         newGameButton.setBackground(Color.green);
         quitButton.setBackground(Color.red);
+
+        JLabel title = new JLabel("Welcome to our black box game", JLabel.CENTER);
+        title.setForeground(Color.white);
 
         newGameButton.addActionListener(new ActionListener() {
             @Override
@@ -33,7 +34,10 @@ public class MenuScreen extends JPanel {
         //s
         newGameButton.setBounds(125,200,100,50);
         quitButton.setBounds(275,200,100,50);
+        title.setBounds(150,100,200,15);
 
+        this.setSize(300,400);
+        this.add(title);
         this.setBackground(Color.BLACK);
         this.add(newGameButton);
         this.add(quitButton);
