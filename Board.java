@@ -21,7 +21,7 @@ public class Board extends JPanel {
     // Leaving empty in for debug reasons
     // final static int EMPTY = 0;
 
-    final static int BSIZE = 13; //board size. controls the number hexagons. Only works with odd numbers
+    final static int BSIZE = 9; //board size. controls the number hexagons. Only works with odd numbers
     final static Color COLOURBACK =  Color.WHITE;
     final static Color COLOURCELL =  Color.ORANGE;
     final static Color COLOURGRID =  Color.BLACK;
