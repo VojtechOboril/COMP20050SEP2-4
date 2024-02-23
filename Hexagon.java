@@ -83,7 +83,7 @@ public class Hexagon
 
     public void clicked() {
         if(this.value == 0) {
-            this.value = (int)'•';
+            this.value = 8226; //(int)'•'
         } else {
             this.value = 0;
         }
