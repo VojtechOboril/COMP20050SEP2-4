@@ -6,6 +6,7 @@ public class Hexagon
 {
     // adjacent hexagons
     // north, north east, south east, south, south west, north west
+    private static boolean active = false;
     private Hexagon n, ne, se, s, sw, nw;
     // Coordinates of this hexagon
     private Point p;
@@ -13,6 +14,14 @@ public class Hexagon
     public final int x, y, z;
     // What should be displayed when clicked?
     private int value;
+
+    //allow to change "active" of hexagon
+    void setActive(Boolean x){
+        active = x;
+    }
+    Boolean getActive(){
+        return active;
+    }
 
     public Hexagon(int x, int y, int z) {
         this.x = x;

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 
 public class Board extends JPanel {
     public Board() {
@@ -35,7 +36,48 @@ public class Board extends JPanel {
 
     Hexagon[][] hBoard = new Hexagon[BSIZE][BSIZE];
 
+    int[] randomAtoms(){
+        // Create an array to store the random numbers
+        int[] randomNumbers = new int[6];
+
+        // Create an instance of Random class
+        Random random = new Random();
+
+        // Generate 6 unique random numbers and store them in the array
+        for (int i = 0; i < 6; i++) {
+            int randomNumber;
+            boolean isUnique;
+            do {
+                // Generate a random number between 0 and 61 (both inclusive)
+                randomNumber = random.nextInt(62);
+
+                // Check if the generated number is unique
+                isUnique = true;
+                for (int j = 0; j < i; j++) {
+                    if (randomNumber == randomNumbers[j]) {
+                        isUnique = false;
+                        break;
+                    }
+                }
+            } while (!isUnique); // Keep generating new numbers until it's unique
+
+            // Store the unique number in the array
+            randomNumbers[i] = randomNumber;
+        }
+        // Print the generated random numbers
+
+        System.out.println("Random numbers:");
+        for (int num : randomNumbers) {
+            System.out.println(num);
+        }
+
+
+        return randomNumbers;
+    }
+
     void initGame(){
+        int[] randomAtoms = randomAtoms();
+        int counter=1;
 
         Hexmech.setXYasVertex(false); //RECOMMENDED: leave this as FALSE.
 
@@ -69,8 +111,20 @@ public class Board extends JPanel {
                     // Add it to the board
                     hBoard[p.x][p.y] = h;
                     // TODO: link them
+                    h.setActive(false);
+                    for(int i=0;i<randomAtoms.length;i++){
+                        if(randomAtoms[i]==counter) {
+                            h.setActive(true);
+                            h.setValue(8226);
+                        }
+                    }
+                    if(h.getActive()){
+                        h.setValue(8226); //(int)'•'
+                    }
+                    //counts number of individual hexagons
+                    counter++;
                 }
-            } 
+            }
         }
 
         //set up board here
@@ -158,6 +212,8 @@ public class Board extends JPanel {
                 hBoard[p.x][p.y].clicked();
                 repaint();
             }
-        } //end of MyMouseListener class
+        }
+
+        //end of MyMouseListener class
     } // end of DrawingPanel class
 }
