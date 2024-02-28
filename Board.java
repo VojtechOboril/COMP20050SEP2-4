@@ -86,8 +86,8 @@ public class Board extends JPanel {
                         if(newx < 0 || newy < 0 || newz < 0 || newx >= BSIZE || newy >= BSIZE || newz >= BSIZE) continue;
                         Hexagon newh = hexagonalBoard[newx][newy][newz];
                         if (newh != null) {
-                            h.setAdjacent(newh, i);
-                            newh.setAdjacent(h, (i+3)%6);
+                            h.setAdjacent(newh, (i+3)%6);
+                            newh.setAdjacent(h, i);
                         }
                     }
                     h.setActive(false);
