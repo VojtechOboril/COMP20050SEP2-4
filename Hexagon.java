@@ -6,7 +6,7 @@ public class Hexagon
 {
     // adjacent hexagons
     // north, north east, south east, south, south west, north west
-    private static boolean active = false;
+    private boolean active = false;
     private Hexagon n, ne, se, s, sw, nw;
     // Coordinates of this hexagon
     private Point p;

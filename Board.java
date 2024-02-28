@@ -36,48 +36,7 @@ public class Board extends JPanel {
 
     Hexagon[][] hBoard = new Hexagon[BSIZE][BSIZE];
 
-    int[] randomAtoms(){
-        // Create an array to store the random numbers
-        int[] randomNumbers = new int[6];
-
-        // Create an instance of Random class
-        Random random = new Random();
-
-        // Generate 6 unique random numbers and store them in the array
-        for (int i = 0; i < 6; i++) {
-            int randomNumber;
-            boolean isUnique;
-            do {
-                // Generate a random number between 0 and 61 (both inclusive)
-                randomNumber = random.nextInt(62);
-
-                // Check if the generated number is unique
-                isUnique = true;
-                for (int j = 0; j < i; j++) {
-                    if (randomNumber == randomNumbers[j]) {
-                        isUnique = false;
-                        break;
-                    }
-                }
-            } while (!isUnique); // Keep generating new numbers until it's unique
-
-            // Store the unique number in the array
-            randomNumbers[i] = randomNumber;
-        }
-        // Print the generated random numbers
-
-        System.out.println("Random numbers:");
-        for (int num : randomNumbers) {
-            System.out.println(num);
-        }
-
-
-        return randomNumbers;
-    }
-
     void initGame(){
-        int[] randomAtoms = randomAtoms();
-        int counter=1;
 
         Hexmech.setXYasVertex(false); //RECOMMENDED: leave this as FALSE.
 
@@ -112,25 +71,14 @@ public class Board extends JPanel {
                     hBoard[p.x][p.y] = h;
                     // TODO: link them
                     h.setActive(false);
-                    for(int i=0;i<randomAtoms.length;i++){
-                        if(randomAtoms[i]==counter) {
-                            h.setActive(true);
-                            h.setValue(8226);
-                        }
-                    }
                     if(h.getActive()){
                         h.setValue(8226); //(int)'•'
                     }
-                    //counts number of individual hexagons
-                    counter++;
                 }
             }
         }
 
-        //set up board here
-//        board[3][3] = (int)'A';
-//        board[4][3] = (int)'Q';
-//        board[4][4] = -(int)'B';
+        placeRandomAtoms();
     }
 
     private void createAndShowGUI()
@@ -216,4 +164,25 @@ public class Board extends JPanel {
 
         //end of MyMouseListener class
     } // end of DrawingPanel class
+
+    void placeRandomAtoms(){
+        Random random = new Random();
+        int placedAtoms = 0;
+        while(placedAtoms < 6) {
+            // Pick a random hexagon(even from the ones not drawn)
+            int placement = random.nextInt(BSIZE * BSIZE);
+            int x = placement % BSIZE;
+            int y = placement / BSIZE;
+            Hexagon tile = hBoard[x][y];
+            // is the hexagon drawn, and is it still inactive?
+            if(tile != null && !tile.getActive()) {
+                //activate it
+                tile.setActive(true);
+                // Temporary reveal generated atoms 
+                tile.clicked();
+                placedAtoms += 1;
+                System.out.println(placement);
+            }
+        }
+    }
 }
