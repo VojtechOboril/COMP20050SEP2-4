@@ -42,10 +42,17 @@ public class Board extends JPanel {
 
         Hexmech.setHeight(HEXSIZE); //Either setHeight or setSize must be run to initialize the hex
         Hexmech.setBorders(BORDERS);
+        createBoard();
+        placeRandomAtoms();
+    }
 
+    private void createBoard() {
         int depth = 0;
         // Create a center tile
         hBoard[BSIZE/2][BSIZE/2] = new Hexagon(0, 0, 0);
+        // temporary way to save board to link hexagons together
+        Hexagon[][][] hexagonalBoard = new Hexagon[BSIZE][BSIZE][BSIZE];
+        hexagonalBoard[BSIZE/2][BSIZE/2][BSIZE/2] = hBoard[BSIZE/2][BSIZE/2];
         // Cube coordinates for each direction
         // https://www.redblobgames.com/grids/hexagons/
         final int[][] sides = {{1, 0, -1}, {0, 1, -1}, {-1, 1, 0}, {-1, 0, 1}, {0, -1, 1}, {1, -1, 0}};
@@ -69,16 +76,24 @@ public class Board extends JPanel {
                     }
                     // Add it to the board
                     hBoard[p.x][p.y] = h;
-                    // TODO: link them
-                    h.setActive(false);
-                    if(h.getActive()){
-                        h.setValue(8226); //(int)'•'
+                    hexagonalBoard[x + BSIZE/2][y + BSIZE/2][z + BSIZE/2] = h;
+                    // for each side
+                    for(int i = 0; i < 6; i++) {
+                        int newx = x + BSIZE/2 + sides[i][0];
+                        int newy = y + BSIZE/2 + sides[i][1];
+                        int newz = z + BSIZE/2 + sides[i][2];
+                        // out of bounds
+                        if(newx < 0 || newy < 0 || newz < 0 || newx >= BSIZE || newy >= BSIZE || newz >= BSIZE) continue;
+                        Hexagon newh = hexagonalBoard[newx][newy][newz];
+                        if (newh != null) {
+                            h.setAdjacent(newh, i);
+                            newh.setAdjacent(h, (i+3)%6);
+                        }
                     }
+                    h.setActive(false);
                 }
             }
         }
-
-        placeRandomAtoms();
     }
 
     private void createAndShowGUI()

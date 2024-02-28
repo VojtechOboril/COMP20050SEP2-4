@@ -32,22 +32,22 @@ public class Hexagon
      */
     public void setAdjacent(Hexagon adj, int direction) {
         switch (direction) {
-            case 1:
+            case 0:
                 this.n = adj;
                 break;
-            case 2:
+            case 1:
                 this.ne = adj;
                 break;
-            case 3:
+            case 2:
                 this.se = adj;
                 break;
-            case 4:
+            case 3:
                 this.s = adj;
                 break;
-            case 5:
+            case 4:
                 this.sw = adj;
                 break;
-            case 6:
+            case 5:
                 this.nw = adj;
                 break;
         }
