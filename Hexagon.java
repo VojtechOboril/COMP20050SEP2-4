@@ -5,8 +5,8 @@ import java.awt.*;
 public class Hexagon
 {
     // adjacent hexagons
-    // north, north east, south east, south, south west, north west
     private boolean active = false;
+    // north, north east, south east, south, south west, north west
     private Hexagon n, ne, se, s, sw, nw;
     // Coordinates of this hexagon
     private Point p;
@@ -14,14 +14,6 @@ public class Hexagon
     public final int x, y, z;
     // What should be displayed when clicked?
     private int value;
-
-    //allow to change "active" of hexagon
-    void setActive(Boolean x){
-        active = x;
-    }
-    Boolean getActive(){
-        return active;
-    }
 
     public Hexagon(int x, int y, int z) {
         this.x = x;
@@ -92,9 +84,21 @@ public class Hexagon
 
     public void clicked() {
         if(this.value == 0) {
-            this.value = 8226; //(int)'•'
+            if (this.active) {
+                this.value = 8226; //(int)'•'
+            } else {
+                this.value = 120; //(int)'x'
+            }
         } else {
             this.value = 0;
         }
+    }
+
+    //allow to change "active" of hexagon
+    void setActive(Boolean x){
+        active = x;
+    }
+    Boolean getActive(){
+        return active;
     }
 }
