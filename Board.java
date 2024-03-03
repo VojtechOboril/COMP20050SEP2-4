@@ -14,10 +14,15 @@ public class Board extends JPanel {
             }
         });
 
-
-
-
         this.add(newGameButton);
+        JButton revealAtoms = new JButton("reveal atoms");
+        revealAtoms.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                checkAtoms();
+            }
+        });
+        this.add(revealAtoms);
     }
     // Leaving empty in for debug reasons
     // final static int EMPTY = 0;
@@ -33,6 +38,8 @@ public class Board extends JPanel {
     final static int HEXSIZE = 60;	//hex size in pixels
     final static int BORDERS = 15;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
+
+    int[] atomArray = new int[6];
 
     Hexagon[][] hBoard = new Hexagon[BSIZE][BSIZE];
 
@@ -195,11 +202,23 @@ public class Board extends JPanel {
             if(tile != null && !tile.getActive()) {
                 //activate it
                 tile.setActive(true);
+                atomArray[placedAtoms] = placement;
                 // Temporary reveal generated atoms 
                 tile.clicked();
                 placedAtoms += 1;
                 System.out.println(placement);
             }
+        }
+    }
+    void checkAtoms(){
+        for (int i = 0; i < atomArray.length; i++) {
+            int x = atomArray[i] % BSIZE;
+            int y = atomArray[i] / BSIZE;
+            Hexagon tile = hBoard[x][y];
+           // if(!tile.getActive()) {
+                tile.clicked();
+           // }
+            System.out.println(atomArray[i]);
         }
     }
 }
