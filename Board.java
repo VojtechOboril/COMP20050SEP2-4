@@ -172,7 +172,9 @@ public class Board extends JPanel {
 				} */
 
                 //What do you want to do when a hexagon is clicked?
-                hBoard[p.x][p.y].clicked();
+                if(hBoard[p.x][p.y] != null) {
+                    hBoard[p.x][p.y].clicked();
+                }
                 repaint();
             }
         }

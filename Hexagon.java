@@ -28,7 +28,7 @@ public class Hexagon
 
     /**
      * @param adj Hexagon to put as adjacent
-     * @param direction 1 = north, and then clockwise up to 6 = nortwest
+     * @param direction 0 = north, and then clockwise up to 5 = nortwest
      */
     public void setAdjacent(Hexagon adj, int direction) {
         switch (direction) {
