@@ -44,7 +44,7 @@ http://www.tonypa.pri.ee/tbw/tut25.html
     /** This functions takes the Side length in pixels and uses that as the basic dimension of the hex.
      It calculates all other needed constants from this dimension.
      */
-    //calculating middle location of circle for COF
+    //calculating middle location of circle for circles of influence
     public static Point hexToPixel(int x, int y) {
         int mx = (int) (x * (s + t) - (BORDERS)+3);
         int my = (int) (y * h + (x % 2) * r - BORDERS);
