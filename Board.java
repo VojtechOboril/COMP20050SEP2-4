@@ -38,7 +38,6 @@ public class Board extends JPanel {
     final static int HEXSIZE = 60;	//hex size in pixels
     final static int BORDERS = 15;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
-
     int[] atomArray = new int[6];
 
     // +2 for edge tiles used to send rays
@@ -180,6 +179,7 @@ public class Board extends JPanel {
 
                 }
             }
+            repaint();
         }
 
         class MyMouseListener extends MouseAdapter	{	//inner class inside DrawingPanel
@@ -238,6 +238,5 @@ public class Board extends JPanel {
                 tile.clicked();
             System.out.println(atomArray[i]);
         }
-        repaint();
     }
 }
