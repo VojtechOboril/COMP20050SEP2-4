@@ -39,7 +39,7 @@ public class Board extends JPanel {
     final static int BORDERS = 15;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
     int[] atomArray = new int[6];
-    //do we show the circles of influence? currently on true since atoms show by default too!
+    //do we show the circles of influence? currently on true since atoms show by default too
     boolean showCircles=true;
 
     // +2 for edge tiles used to send rays
