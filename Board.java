@@ -15,22 +15,22 @@ public class Board extends JPanel {
         });
 
         this.add(newGameButton);
-        JButton revealAtoms = new JButton("reveal atoms");
-        revealAtoms.addActionListener(new ActionListener() {
+        JButton revealAtomsButton = new JButton("reveal atoms");
+        revealAtomsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
                 checkAtoms();
             }
         });
-        this.add(revealAtoms);
+        this.add(revealAtomsButton);
     }
     // Leaving empty in for debug reasons
     // final static int EMPTY = 0;
 
     final static int BSIZE = 9; //board size. controls the number hexagons. Only works with odd numbers
-    final static Color COLOURBACK =  Color.WHITE;
+    final static Color COLOURBACK =  Color.BLACK;
     final static Color COLOURCELL =  Color.ORANGE;
-    final static Color COLOURGRID =  Color.BLACK;
+    final static Color COLOURGRID =  Color.WHITE;
     final static Color COLOURONE = new Color(255,255,255,200);
     final static Color COLOURONETXT = Color.BLUE;
     final static Color COLOURTWO = new Color(0,0,0,200);
@@ -163,8 +163,6 @@ public class Board extends JPanel {
 
         class MyMouseListener extends MouseAdapter	{	//inner class inside DrawingPanel
             public void mouseClicked(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
                 //mPt.x = x;
                 //mPt.y = y;
                 Point p = new Point( Hexmech.pxtoHex(e.getX(),e.getY()) );
@@ -215,8 +213,10 @@ public class Board extends JPanel {
             int x = atomArray[i] % BSIZE;
             int y = atomArray[i] / BSIZE;
             Hexagon tile = hBoard[x][y];
-           // if(!tile.getActive()) {
                 tile.clicked();
+                tile.clicked();
+           // }
+            tile.clicked();
            // }
             System.out.println(atomArray[i]);
         }
