@@ -27,7 +27,7 @@ public class Board extends JPanel {
     // Leaving empty in for debug reasons
     // final static int EMPTY = 0;
 
-    final static int BSIZE = 9; //board size. controls the number hexagons. Only works with odd numbers
+    final static int BSIZE = 11; //board size. controls the number hexagons. Only works with odd numbers
     final static Color COLOURBACK =  Color.BLACK;
     final static Color COLOURCELL =  Color.ORANGE;
     final static Color COLOURGRID =  Color.WHITE;
@@ -41,7 +41,8 @@ public class Board extends JPanel {
 
     int[] atomArray = new int[6];
 
-    Hexagon[][] hBoard = new Hexagon[BSIZE][BSIZE];
+    // +2 for edge tiles used to send rays
+    Tile[][] hBoard = new Tile[BSIZE][BSIZE];
 
     void initGame(){
 
@@ -58,7 +59,7 @@ public class Board extends JPanel {
         // Create a center tile
         hBoard[BSIZE/2][BSIZE/2] = new Hexagon(0, 0, 0);
         // temporary way to save board to link hexagons together
-        Hexagon[][][] hexagonalBoard = new Hexagon[BSIZE][BSIZE][BSIZE];
+        Tile[][][] hexagonalBoard = new Tile[BSIZE][BSIZE][BSIZE];
         hexagonalBoard[BSIZE/2][BSIZE/2][BSIZE/2] = hBoard[BSIZE/2][BSIZE/2];
         // Cube coordinates for each direction
         // https://www.redblobgames.com/grids/hexagons/
@@ -73,12 +74,17 @@ public class Board extends JPanel {
                     int x = sides[side - 1][0] * depth + sides[(side + 1)%6][0] * (tile - 1);
                     int y = sides[side - 1][1] * depth + sides[(side + 1)%6][1] * (tile - 1);
                     int z = sides[side - 1][2] * depth + sides[(side + 1)%6][2] * (tile - 1);
-                    Hexagon h = new Hexagon(x, y, z);
+                    Tile h;
+                    if(depth == BSIZE/2) {
+                        h = new Edge(x, y, z);
+                    } else {
+                        h = new Hexagon(x, y, z);
+                    }
                     // Convert those cube coordinates to offset coordinates
                     h.convertPosition(BSIZE);
                     Point p = h.getPosition();
                     if(hBoard[p.x][p.y] != null) {
-                        Hexagon g = hBoard[p.x][p.y];
+                        Tile g = hBoard[p.x][p.y];
                         System.out.println(String.format("%d %d %d and %d %d %d have the same point %d %d", x, y, z, g.x, g.y, g.z, p.x, p.y));
                     }
                     // Add it to the board
@@ -91,13 +97,12 @@ public class Board extends JPanel {
                         int newz = z + BSIZE/2 + sides[i][2];
                         // out of bounds
                         if(newx < 0 || newy < 0 || newz < 0 || newx >= BSIZE || newy >= BSIZE || newz >= BSIZE) continue;
-                        Hexagon newh = hexagonalBoard[newx][newy][newz];
+                        Tile newh = hexagonalBoard[newx][newy][newz];
                         if (newh != null) {
                             h.setAdjacent(newh, (i+3)%6);
                             newh.setAdjacent(h, i);
                         }
                     }
-                    h.setActive(false);
                 }
             }
         }
@@ -212,11 +217,11 @@ public class Board extends JPanel {
             int placement = random.nextInt(BSIZE * BSIZE);
             int x = placement % BSIZE;
             int y = placement / BSIZE;
-            Hexagon tile = hBoard[x][y];
+            Tile tile = hBoard[x][y];
             // is the hexagon drawn, and is it still inactive?
-            if(tile != null && !tile.getActive()) {
+            if(tile != null && tile instanceof Hexagon && !((Hexagon) tile).getActive()) {
                 //activate it
-                tile.setActive(true);
+                ((Hexagon) tile).setActive(true);
                 atomArray[placedAtoms] = placement;
                 // Temporary reveal generated atoms 
                 tile.clicked();
@@ -229,7 +234,7 @@ public class Board extends JPanel {
         for (int i = 0; i < atomArray.length; i++) {
             int x = atomArray[i] % BSIZE;
             int y = atomArray[i] / BSIZE;
-            Hexagon tile = hBoard[x][y];
+            Tile tile = hBoard[x][y];
                 tile.clicked();
                 tile.clicked();
            // }
