@@ -168,7 +168,7 @@ public class Board extends JPanel {
             int radius = 60; // adjust the radius as needed
             for (int i = 0; i < BSIZE; i++) {
                 for (int j = 0; j < BSIZE; j++) {
-                    if (hBoard[i][j] != null && ((Hexagon)hBoard[i][j]).getActive()) {
+                    if (hBoard[i][j] != null && hBoard[i][j] instanceof Hexagon && ((Hexagon)hBoard[i][j]).getActive()) {
                         Point center = Hexmech.hexToPixel(i, j);
                         Stroke oldStroke = g2.getStroke();
                         // Set a dashed stroke
@@ -236,11 +236,8 @@ public class Board extends JPanel {
             int y = atomArray[i] / BSIZE;
             Tile tile = hBoard[x][y];
                 tile.clicked();
-                tile.clicked();
-           // }
-            tile.clicked();
-           // }
             System.out.println(atomArray[i]);
         }
+        repaint();
     }
 }
