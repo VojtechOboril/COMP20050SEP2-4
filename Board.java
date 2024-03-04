@@ -39,6 +39,8 @@ public class Board extends JPanel {
     final static int BORDERS = 15;
     final static int SCRSIZE = HEXSIZE * (BSIZE + 1) + BORDERS*3; //screen size (vertical dimension).
     int[] atomArray = new int[6];
+    //do we show the circles of influence? currently on true since atoms show by default too!
+    boolean showCircles=true;
 
     // +2 for edge tiles used to send rays
     Tile[][] hBoard = new Tile[BSIZE][BSIZE];
@@ -163,20 +165,22 @@ public class Board extends JPanel {
 
             //g.setColor(Color.RED);
             //g.drawLine(mPt.x,mPt.y, mPt.x,mPt.y);
-            g.setColor(Color.RED);
-            int radius = 60; // adjust the radius as needed
-            for (int i = 0; i < BSIZE; i++) {
-                for (int j = 0; j < BSIZE; j++) {
-                    if (hBoard[i][j] != null && hBoard[i][j] instanceof Hexagon && ((Hexagon)hBoard[i][j]).getActive()) {
-                        Point center = Hexmech.hexToPixel(i, j);
-                        Stroke oldStroke = g2.getStroke();
-                        // Set a dashed stroke
-                        g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0));
-                        g2.drawOval(center.x, center.y, 2 * radius, 2 * radius);
-                        // Reset the stroke
-                        g2.setStroke(oldStroke);
-                    }
+            if(showCircles) {
+                g.setColor(Color.RED);
+                int radius = 60; // adjust the radius as needed
+                for (int i = 0; i < BSIZE; i++) {
+                    for (int j = 0; j < BSIZE; j++) {
+                        if (hBoard[i][j] != null && hBoard[i][j] instanceof Hexagon && ((Hexagon) hBoard[i][j]).getActive()) {
+                            Point center = Hexmech.hexToPixel(i, j);
+                            Stroke oldStroke = g2.getStroke();
+                            // Set a dashed stroke
+                            g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{5}, 0));
+                            g2.drawOval(center.x, center.y, 2 * radius, 2 * radius);
+                            // Reset the stroke
+                            g2.setStroke(oldStroke);
+                        }
 
+                    }
                 }
             }
             repaint();
@@ -231,6 +235,7 @@ public class Board extends JPanel {
         }
     }
     void checkAtoms(){
+        showCircles=!showCircles;
         for (int i = 0; i < atomArray.length; i++) {
             int x = atomArray[i] % BSIZE;
             int y = atomArray[i] / BSIZE;
