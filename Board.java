@@ -20,7 +20,7 @@ public class Board extends JPanel {
     // default too
     boolean showCircles = true;
     Tile[][] hBoard;
-    
+
     public Board() {
         JButton newGameButton = new JButton("Board implementation");
         newGameButton.addActionListener(new ActionListener() {
@@ -126,7 +126,7 @@ public class Board extends JPanel {
             int y = placement / BSIZE;
             Tile tile = hBoard[x][y];
             // is the hexagon drawn, and is it still inactive?
-            if (tile != null && tile instanceof Hexagon && !((Hexagon) tile).getActive()) {
+            if (tile instanceof Hexagon && !((Hexagon) tile).getActive()) {
                 // activate it
                 ((Hexagon) tile).setActive(true);
                 atomArray[placedAtoms] = placement;
@@ -165,36 +165,39 @@ public class Board extends JPanel {
 
             for (int i = 0; i < BSIZE; i++) {
                 for (int j = 0; j < BSIZE; j++) {
-                    // draw grid
-                    if (hBoard[i][j] != null)
+                    if (hBoard[i][j] != null) {
+                        // draw grid
                         Hexmech.drawHex(i, j, g2);
-                    // fill in hexes
-                    if (hBoard[i][j] != null)
+                        // fill in hexes
                         Hexmech.fillHex(i, j, hBoard[i][j].getValue(), g2);
+                    }
                 }
             }
 
             if (showCircles) {
-                g.setColor(Color.RED);
-                int radius = 60; // adjust the radius as needed
-                for (int i = 0; i < BSIZE; i++) {
-                    for (int j = 0; j < BSIZE; j++) {
-                        if (hBoard[i][j] != null && hBoard[i][j] instanceof Hexagon
-                                && ((Hexagon) hBoard[i][j]).getActive()) {
-                            Point center = Hexmech.hexToPixel(i, j);
-                            Stroke oldStroke = g2.getStroke();
-                            // Set a dashed stroke
-                            g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
-                                    new float[] { 5 }, 0));
-                            g2.drawOval(center.x, center.y, 2 * radius, 2 * radius);
-                            // Reset the stroke
-                            g2.setStroke(oldStroke);
-                        }
-
-                    }
-                }
+                drawCircles(g2);
             }
             repaint();
+        }
+
+        private void drawCircles(Graphics2D g2) {
+            g2.setColor(Color.RED);
+            int radius = 60; // adjust the radius as needed
+            for (int i = 0; i < BSIZE; i++) {
+                for (int j = 0; j < BSIZE; j++) {
+                    if (hBoard[i][j] instanceof Hexagon && ((Hexagon) hBoard[i][j]).getActive()) {
+                        Point center = Hexmech.hexToPixel(i, j);
+                        Stroke oldStroke = g2.getStroke();
+                        // Set a dashed stroke
+                        g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+                                new float[] { 5 }, 0));
+                        g2.drawOval(center.x, center.y, 2 * radius, 2 * radius);
+                        // Reset the stroke
+                        g2.setStroke(oldStroke);
+                    }
+
+                }
+            }
         }
 
         class MyMouseListener extends MouseAdapter { // inner class inside DrawingPanel
