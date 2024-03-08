@@ -109,7 +109,7 @@ public class Board extends JPanel {
     private void createAndShowGUI() {
         DrawingPanel panel = new DrawingPanel();
         JFrame frame = new JFrame("Hex Testing 4");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         Container content = frame.getContentPane();
         content.add(panel);
         frame.setSize((int) (SCRSIZE / 1.23), SCRSIZE);
