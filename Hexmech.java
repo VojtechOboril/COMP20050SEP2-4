@@ -1,6 +1,7 @@
 /* This is a companion class to hexgame.java. It handles all of the mechanics related to hexagon grids.*/
 // Stolen from https://gist.github.com/salamander2/4329783
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 public class Hexmech
 {
@@ -125,7 +126,11 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         g2.fillPolygon(poly);
         g2.setColor(Board.COLOURGRID);
         g2.drawPolygon(poly);
+        //g2.drawLine(x, y, x - s - t, y + s + t);
     }
+
+    //drawRayPath
+    // TODO
 
     /***************************************************************************
      * Name: fillHex()

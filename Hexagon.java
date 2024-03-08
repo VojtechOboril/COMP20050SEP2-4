@@ -27,6 +27,8 @@ public class Hexagon extends Tile
     }
 
     public void receiveRay(Ray r) {
+        // handle deflections, absorbtions
+        this.clicked();
         this.getAdjacent(r.getDirection()).receiveRay(r);
     }
 }

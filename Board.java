@@ -20,6 +20,7 @@ public class Board extends JPanel {
     // default too
     boolean showCircles = true;
     Tile[][] hBoard;
+    //Ray[] sentRays;
 
     public Board() {
         JButton newGameButton = new JButton("Board implementation");
@@ -37,6 +38,7 @@ public class Board extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 checkAtoms();
+                //showRayPaths
             }
         });
         this.add(revealAtomsButton);
