@@ -1,6 +1,7 @@
 public class Ray {
     private Tile start, end;
     private int direction;
+    private Result result;
     //path
     // TODO
 
@@ -27,5 +28,14 @@ public class Ray {
 
     public void setDirection(int d) {
         this.direction = d;
+    }
+
+    public void setResult(Result r) {
+        this.result = r;
+        System.out.println("Ray started at " + this.getStart() + " and ended at " + this.getEnd() + " with the result of " + this.getResult());
+    }
+
+    public Result getResult() {
+        return this.result;
     }
 }
