@@ -12,7 +12,25 @@ public class Edge extends Tile {
                 // TODO only send 1
                 Ray r = new Ray(this, i);
                 System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
-                this.getAdjacent(r.getDirection()).receiveRay(r);
+
+                // check if there is an atom right next to it, resulting in a reflection or absorbtion
+                boolean reflected = false;
+                boolean absorbed = false;
+                for(int j = r.getDirection() - 1; j <= r.getDirection()+1; j++) {
+                    // if one of the tiles in the direction of the beam has an atom
+                    if(this.getAdjacent((j + 6)%6) instanceof Hexagon && ((Hexagon) this.getAdjacent((j + 6)%6)).getActive()) {
+                        if(j == r.getDirection()) absorbed = true;
+                        reflected = true;
+                    }
+                }
+                if(absorbed) {
+                    r.setEnd(this.getAdjacent(r.getDirection()));
+                    r.setResult(Result.ABSORBED);
+                } else if(reflected) {
+                    this.receiveRay(r);
+                } else {
+                    this.getAdjacent(r.getDirection()).receiveRay(r);
+                }
             }
         }
     }
@@ -20,6 +38,10 @@ public class Edge extends Tile {
     @Override
     public void receiveRay(Ray r) {
         r.setEnd(this);
-        System.out.println("Ray started at " + r.getStart() + " and ended at " + r.getEnd());
+        if(r.getStart() == r.getEnd()) {
+            r.setResult(Result.REFLECTION);
+        } else {
+            r.setResult(Result.DETOUR);
+        }
     }
 }

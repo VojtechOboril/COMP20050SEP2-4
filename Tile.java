@@ -1,7 +1,6 @@
 import java.awt.*;
 abstract class Tile {
     // adjacent hexagons
-    protected boolean active = false;
     // north, north east, south east, south, south west, north west
     protected Tile n, ne, se, s, sw, nw;
     // Coordinates of this hexagon
