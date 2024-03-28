@@ -3,6 +3,7 @@ public class Edge extends Tile {
         super(x, y, z);
     }
 
+
     @Override
     public void clicked() {
         for(int i = 0;  i < 6; i++) {

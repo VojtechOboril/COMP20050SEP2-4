@@ -212,8 +212,32 @@ public class Board extends JPanel {
                     hBoard[p.x][p.y].clicked();
                 }
                 repaint();
+
+                //show coordinates
+                int clickX = e.getX(); // X-coordinate of the click relative to this panel
+                int clickY = e.getY(); // Y-coordinate of the click relative to this panel
+                System.out.println("Xcord=" + clickX + "\nYcord="+ clickY);
+                int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
+                System.out.println("the mid point y is " + hexMidY);
+
+                // Compare clickY with the midpoint Y-coordinate of the hexagon
+                if (clickY < hexMidY) {
+                    // Click is above the midpoint
+                    System.out.println("Clicked above the midpoint of the hexagon.");
+                    Tile.locationOnHex=0;
+                } else if (clickY > hexMidY) {
+                    // Click is below the midpoint
+                    System.out.println("Clicked below the midpoint of the hexagon.");
+                    Tile.locationOnHex=1;
+                } else {
+                    // Click is exactly at the midpoint
+                    System.out.println("Clicked exactly at the midpoint of the hexagon.");
+                    Tile.locationOnHex=1;
+                }
             }
 
         } // end of MyMouseListener class
     } // end of DrawingPanel class
+
+
 }

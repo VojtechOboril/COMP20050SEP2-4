@@ -31,4 +31,5 @@ public class Hexagon extends Tile
         this.clicked();
         this.getAdjacent(r.getDirection()).receiveRay(r);
     }
+
 }

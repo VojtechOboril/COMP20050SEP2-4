@@ -10,6 +10,8 @@ abstract class Tile {
     protected final int x, y, z;
     // What should be displayed when clicked?
     protected int value;
+    //where did we click on the hexagon? (in respect to the midpoint) 0=above, 1=below.
+    public static int locationOnHex;
 
     public Tile(int x, int y, int z) {
         this.x = x;
@@ -80,9 +82,9 @@ abstract class Tile {
                 return this.sw;
             case 5:
                 return this.nw;
+            default:
+                return null;
         }
-        // TODO err
-        return null;
     }
 
     public int getValue() {
