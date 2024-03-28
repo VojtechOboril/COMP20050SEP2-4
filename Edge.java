@@ -3,6 +3,9 @@ public class Edge extends Tile {
         super(x, y, z);
     }
 
+    //TODO if there is more than one adjacent hexagon then use locationOnHex variable (0/1)
+    //have variable Tile adj1, adj2
+    //e.g if locationOnHex == 0 then send ray to adj1 else adj2.
 
     @Override
     public void clicked() {
