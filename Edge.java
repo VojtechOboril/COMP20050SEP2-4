@@ -2,10 +2,12 @@ public class Edge extends Tile {
     public Edge(int x, int y, int z) {
         super(x, y, z);
     }
+    public static int locationOnHex;
 
     //TODO if there is more than one adjacent hexagon then use locationOnHex variable (0/1)
     //have variable Tile adj1, adj2
     //e.g if locationOnHex == 0 then send ray to adj1 else adj2.
+
 
     @Override
     public void clicked() {
@@ -27,8 +29,9 @@ public class Edge extends Tile {
             Tile adj = this.getAdjacent(i);
             if(adj instanceof Hexagon) {
                 Ray r = new Ray(this,i);
+                //if has 2 adjacent hexagons
                 if(counter==2){
-                    System.out.println(locationOnHex);
+                    System.out.println("locationonhex= " + locationOnHex);
                     if(locationOnHex==0){
                         r.setStart(adjs[0]);
                         r.setDirection(directions[0]);
@@ -61,6 +64,8 @@ public class Edge extends Tile {
                 } else {
                     this.getAdjacent(r.getDirection()).receiveRay(r);
                 }
+                //this prevents function from running twice when we have more than one adjacent hexagon
+                break;
             }
         }
     }

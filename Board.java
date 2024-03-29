@@ -207,16 +207,11 @@ public class Board extends JPanel {
                 Point p = new Point(Hexmech.pxtoHex(e.getX(), e.getY()));
                 if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE)
                     return;
-                // What do you want to do when a hexagon is clicked?
-                if (hBoard[p.x][p.y] != null) {
-                    hBoard[p.x][p.y].clicked();
-                }
-                repaint();
 
-                //show coordinates
+                // Update locationOnHex variable before invoking clicked() method
                 int clickX = e.getX(); // X-coordinate of the click relative to this panel
                 int clickY = e.getY(); // Y-coordinate of the click relative to this panel
-                System.out.println("Xcord=" + clickX + "\nYcord="+ clickY);
+                System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
                 int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
                 System.out.println("the mid point y is " + hexMidY);
 
@@ -224,18 +219,20 @@ public class Board extends JPanel {
                 if (clickY < hexMidY) {
                     // Click is above the midpoint
                     System.out.println("Clicked above the midpoint of the hexagon.");
-                    Tile.locationOnHex=0;
-                } else if (clickY > hexMidY) {
+                    Edge.locationOnHex = 0;
+                } else {
                     // Click is below the midpoint
                     System.out.println("Clicked below the midpoint of the hexagon.");
-                    Tile.locationOnHex=1;
-                } else {
-                    // Click is exactly at the midpoint
-                    System.out.println("Clicked exactly at the midpoint of the hexagon.");
-                    Tile.locationOnHex=1;
+                    Edge.locationOnHex = 1;
                 }
-            }
 
+                // Call clicked() method after updating locationOnHex
+                if (hBoard[p.x][p.y] != null) {
+                    hBoard[p.x][p.y].clicked();
+                }
+
+                repaint();
+            }
         } // end of MyMouseListener class
     } // end of DrawingPanel class
 
