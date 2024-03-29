@@ -12,7 +12,6 @@ public class Main {
         frame = new JFrame("Black Box game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         cardPanel = new JPanel();
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);

@@ -29,6 +29,9 @@ public class Ray {
     public void setDirection(int d) {
         this.direction = d;
     }
+    public void setStart(Tile start) {
+        this.start=start;
+    }
 
     public void setResult(Result r) {
         this.result = r;

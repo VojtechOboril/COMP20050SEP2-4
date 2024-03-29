@@ -9,11 +9,38 @@ public class Edge extends Tile {
 
     @Override
     public void clicked() {
+        //set these to be the 2 adj locations if there is more than 2 locations.
+        Tile[] adjs = new Tile[2];
+        int[] directions= new int[2];
+        //check how many adjacents there are, then save them into the array 'adjs'
+        int counter=0;
+        for(int i=0;i<6;i++){
+            Tile adj = this.getAdjacent(i);
+            if(adj instanceof Hexagon){
+                adjs[counter]= adj;
+                directions[counter] = i;
+                counter++;
+            }
+        }
+
         for(int i = 0;  i < 6; i++) {
             Tile adj = this.getAdjacent(i);
             if(adj instanceof Hexagon) {
-                // TODO only send 1
-                Ray r = new Ray(this, i);
+                Ray r = new Ray(this,i);
+                if(counter==2){
+                    System.out.println(locationOnHex);
+                    if(locationOnHex==0){
+                        r.setStart(adjs[0]);
+                        r.setDirection(directions[0]);
+                        System.out.println("direction="+directions[0]);
+                    }
+                    else if(locationOnHex==1){
+                        r.setStart(adjs[1]);
+                        r.setDirection(directions[1]);
+                        System.out.println("direction="+directions[1]);
+                    }
+                }
+
                 System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
 
                 // check if there is an atom right next to it, resulting in a reflection or absorbtion
