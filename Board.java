@@ -77,7 +77,6 @@ public class Board extends JPanel {
                     int z = sides[side - 1][2] * depth + sides[(side + 1) % 6][2] * (tile - 1);
                     Tile h = depth == BSIZE / 2 ? new Edge(x, y, z) : new Hexagon(x, y, z);
                     // Convert those cube coordinates to offset coordinates
-                    h.convertPosition(BSIZE);
                     Point p = h.getPosition();
                     if (hBoard[p.x][p.y] != null) {
                         Tile g = hBoard[p.x][p.y];
@@ -164,42 +163,18 @@ public class Board extends JPanel {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
             super.paintComponent(g2);
-
-            for (int i = 0; i < BSIZE; i++) {
-                for (int j = 0; j < BSIZE; j++) {
-                    if (hBoard[i][j] != null) {
-                        // draw grid
-                        Hexmech.drawHex(i, j, g2);
-                        // fill in hexes
-                        Hexmech.fillHex(i, j, hBoard[i][j].getValue(), g2);
-                    }
+            for (Tile[] i : hBoard) {
+                for (Tile tile : i) {
+                    if(tile != null) tile.drawBottom(g2, showCircles);
                 }
             }
 
-            if (showCircles) {
-                drawCircles(g2);
+            for (Tile[] i : hBoard) {
+                for (Tile tile : i) {
+                    if(tile != null) tile.drawTop(g2, showCircles);
+                }
             }
             repaint();
-        }
-
-        private void drawCircles(Graphics2D g2) {
-            g2.setColor(Color.RED);
-            int radius = 60; // adjust the radius as needed
-            for (int i = 0; i < BSIZE; i++) {
-                for (int j = 0; j < BSIZE; j++) {
-                    if (hBoard[i][j] instanceof Hexagon && ((Hexagon) hBoard[i][j]).getActive()) {
-                        Point center = Hexmech.hexToPixel(i, j);
-                        Stroke oldStroke = g2.getStroke();
-                        // Set a dashed stroke
-                        g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
-                                new float[] { 5 }, 0));
-                        g2.drawOval(center.x, center.y, 2 * radius, 2 * radius);
-                        // Reset the stroke
-                        g2.setStroke(oldStroke);
-                    }
-
-                }
-            }
         }
 
         class MyMouseListener extends MouseAdapter { // inner class inside DrawingPanel
@@ -211,9 +186,9 @@ public class Board extends JPanel {
                 // Update locationOnHex variable before invoking clicked() method
                 int clickX = e.getX(); // X-coordinate of the click relative to this panel
                 int clickY = e.getY(); // Y-coordinate of the click relative to this panel
-                System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
+                // System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
                 int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
-                System.out.println("the mid point y is " + hexMidY);
+                // System.out.println("the mid point y is " + hexMidY);
 
                 // Compare clickY with the midpoint Y-coordinate of the hexagon
                 if (clickY < hexMidY) {

@@ -1,7 +1,6 @@
 /* This is a companion class to hexgame.java. It handles all of the mechanics related to hexagon grids.*/
 // Stolen from https://gist.github.com/salamander2/4329783
 import java.awt.*;
-import java.awt.geom.Line2D;
 
 public class Hexmech
 {
@@ -30,10 +29,10 @@ http://www.tonypa.pri.ee/tbw/tut25.html
 
     private static int BORDERS=50;	//default number of pixels for the border.
 
-    private static int s=0;	// length of one side
-    private static int t=0;	// short side of 30o triangle outside of each hex
-    private static int r=0;	// radius of inscribed circle (centre to middle of each side). r= h/2
-    private static int h=0;	// height. Distance between centres of two adjacent hexes. Distance between two opposite sides in a hex.
+    public static int s=0;	// length of one side
+    public static int t=0;	// short side of 30o triangle outside of each hex
+    public static int r=0;	// radius of inscribed circle (centre to middle of each side). r= h/2
+    public static int h=0;	// height. Distance between centres of two adjacent hexes. Distance between two opposite sides in a hex.
 
     public static void setXYasVertex(boolean b) {
         XYVertex=b;
@@ -128,10 +127,6 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         g2.drawPolygon(poly);
         //g2.drawLine(x, y, x - s - t, y + s + t);
     }
-
-
-    //drawRayPath
-    // TODO
 
     /***************************************************************************
      * Name: fillHex()

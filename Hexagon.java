@@ -1,7 +1,16 @@
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Stroke;
+
 public class Hexagon extends Tile
 {
     private static int[] deflectionTable = {0, 1, 0, 2, 5, 3, 4, 3};
+    private static int circleRadius = 60;
+    private static int topLeftToCenter = (int)Math.sqrt((double)(Board.HEXSIZE * Board.HEXSIZE));
     private boolean active = false;
+    private boolean[] passedRays = {false, false, false, false, false, false};
     public Hexagon(int x, int y, int z) {
         super(x, y, z);
     }
@@ -29,26 +38,66 @@ public class Hexagon extends Tile
 
     public void receiveRay(Ray r) {
         // temporarily show the path of the ray
-        this.clicked();
+        // this.clicked();
         // handle deflections, absorbtions
+        int startDirection = r.getDirection();
+        int endDirection;
         int exponent = 1;
         int index = 0;
-        for(int i = r.getDirection() - 1; i <= r.getDirection() + 1; i++) {
+        for(int i = startDirection - 1; i <= startDirection + 1; i++) {
             // there were cases where i = -1, and -1%6 = -1, so just making sure this is all positive
             if(this.getAdjacent((i + 6)%6) instanceof Hexagon && ((Hexagon) this.getAdjacent((i + 6)%6)).getActive()) {
                 index += exponent;
             }
             exponent *= 2;
         }
+        endDirection = (startDirection + deflectionTable[index]) % 6;
+
+        if(index != 2) passedRays[endDirection] = true; // it doesn't go anywhere
+        else passedRays[startDirection] = true;
+        passedRays[(startDirection + 3) % 6] = true;
+
         if(index == 2) {
             //absorbed by an atom
             r.setEnd(this);
             r.setResult(Result.ABSORBED);
         } else {
             //deflected
-            r.setDirection((r.getDirection() + deflectionTable[index]) % 6);
-            this.getAdjacent(r.getDirection()).receiveRay(r);
+            r.setDirection(endDirection);
+            this.getAdjacent(endDirection).receiveRay(r);
         }
     }
 
+    public void drawBottom(Graphics2D g2, boolean showCircles) {
+        Hexmech.drawHex(this.p.x, this.p.y, g2);
+        Hexmech.fillHex(this.p.x, this.p.y, this.value, g2);
+    }
+
+    public void drawTop(Graphics2D g2, boolean showCircles) {
+        if(showCircles) {
+            Point topLeft = Hexmech.hexToPixel(this.p.x, this.p.y);
+            if(this.active) {
+                g2.setColor(Color.RED);
+                Stroke oldStroke = g2.getStroke();
+                // Set a dashed stroke
+                g2.setStroke(new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+                        new float[] { 5 }, 0));
+                g2.drawOval(topLeft.x, topLeft.y, 2 * circleRadius, 2 * circleRadius);
+                // Reset the stroke
+                g2.setStroke(oldStroke);
+            }
+
+            // TODO Save and draw lines here that went through
+            Point center = new Point(topLeft.x + topLeftToCenter, topLeft.y + topLeftToCenter);
+            g2.setColor(Color.black);
+            for (int i = 0; i < 6; i++) {
+                if(passedRays[i]) {
+                    int x = (hexagonPoints.xpoints[i] + hexagonPoints.xpoints[(i + 1) %6]) / 2;
+                    int y = (hexagonPoints.ypoints[i] + hexagonPoints.ypoints[(i + 1) %6]) / 2;
+
+                    g2.drawLine(center.x, center.y, x, y);
+                }
+            }
+        }
+    }
 }

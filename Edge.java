@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+
 public class Edge extends Tile {
     public Edge(int x, int y, int z) {
         super(x, y, z);
@@ -78,5 +80,16 @@ public class Edge extends Tile {
         } else {
             r.setResult(Result.DETOUR);
         }
+    }
+
+    public void drawBottom(Graphics2D g2, boolean showCircles) {
+        // showCircles unused here
+        // TODO change this to draw it in 2 halves
+        Hexmech.drawHex(this.p.x, this.p.y, g2);
+        Hexmech.fillHex(this.p.x, this.p.y, this.value, g2);
+    }
+
+    void drawTop(Graphics2D g2, boolean showCircles) {
+        //draw any initial lines that went through if showCircles
     }
 }
