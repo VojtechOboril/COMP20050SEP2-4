@@ -33,7 +33,6 @@ public class Edge extends Tile {
             if(adj instanceof Hexagon) {
                 Ray r = new Ray(this,i);
                 //if has 2 adjacent hexagons
-                //TODO make so the top half sends to upper available direction. if its the right half, then switch the directions
                 if(counter==2 && !rightHalf){
                     if(locationOnHex==0){
                         r.setStart(adjs[0]);
