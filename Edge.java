@@ -5,6 +5,7 @@ public class Edge extends Tile {
         super(x, y, z);
     }
     public static int locationOnHex;
+    public static boolean rightHalf=false;
 
     //TODO if there is more than one adjacent hexagon then use locationOnHex variable (0/1)
     //have variable Tile adj1, adj2
@@ -32,8 +33,8 @@ public class Edge extends Tile {
             if(adj instanceof Hexagon) {
                 Ray r = new Ray(this,i);
                 //if has 2 adjacent hexagons
-                if(counter==2){
-                    System.out.println("locationonhex= " + locationOnHex);
+                //TODO make so the top half sends to upper available direction. if its the right half, then switch the directions
+                if(counter==2 && !rightHalf){
                     if(locationOnHex==0){
                         r.setStart(adjs[0]);
                         r.setDirection(directions[0]);
@@ -43,6 +44,17 @@ public class Edge extends Tile {
                         r.setStart(adjs[1]);
                         r.setDirection(directions[1]);
                         System.out.println("direction="+directions[1]);
+                    }
+                } else if (counter==2 && rightHalf) {
+                    if(locationOnHex==0){
+                        r.setStart(adjs[1]);
+                        r.setDirection(directions[1]);
+                        System.out.println("direction="+directions[1]);
+                    }
+                    else if(locationOnHex==1){
+                        r.setStart(adjs[0]);
+                        r.setDirection(directions[0]);
+                        System.out.println("direction="+directions[0]);
                     }
                 }
 

@@ -200,6 +200,8 @@ public class Board extends JPanel {
                     System.out.println("Clicked below the midpoint of the hexagon.");
                     Edge.locationOnHex = 1;
                 }
+                //let boolean right half be true if X coord is > 322
+                Edge.rightHalf= clickX > 322;
 
                 // Call clicked() method after updating locationOnHex
                 if (hBoard[p.x][p.y] != null) {
