@@ -75,7 +75,6 @@ public class Board extends JPanel {
                     int x = sides[side - 1][0] * depth + sides[(side + 1) % 6][0] * (tile - 1);
                     int y = sides[side - 1][1] * depth + sides[(side + 1) % 6][1] * (tile - 1);
                     int z = sides[side - 1][2] * depth + sides[(side + 1) % 6][2] * (tile - 1);
-                    System.out.println(depth);
                     Tile h = depth == BSIZE / 2 ? new Edge(x, y, z) : new Hexagon(x, y, z);
                     // Convert those cube coordinates to offset coordinates
                     Point p = h.getPosition();
