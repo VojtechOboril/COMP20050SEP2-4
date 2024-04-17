@@ -121,6 +121,12 @@ http://www.tonypa.pri.ee/tbw/tut25.html
         int y = j * h + (i%2) * h/2;
         Polygon poly = hex(x,y);
         g2.setColor(Board.COLOURCELL);
+        //////////////
+//        if(i==Board.BSIZE-1||i==0||j==0||j==Board.BSIZE-1){
+//            g2.setColor(Color.black);
+//        }
+
+
         //g2.fillPolygon(hexmech.hex(x,y));
         g2.fillPolygon(poly);
         g2.setColor(Board.COLOURGRID);

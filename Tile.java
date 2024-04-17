@@ -26,6 +26,7 @@ abstract class Tile {
     abstract void clicked();
     abstract void drawBottom(Graphics2D g2, boolean showCircles);
     abstract void drawTop(Graphics2D g2, boolean showCircles);
+    abstract void drawRayMarker(Graphics2D g2);
     /**
      * @param adj Hexagon to put as adjacent
      * @param direction 0 = north, and then counterclockwise up to 5 = northeast

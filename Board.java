@@ -75,6 +75,7 @@ public class Board extends JPanel {
                     int x = sides[side - 1][0] * depth + sides[(side + 1) % 6][0] * (tile - 1);
                     int y = sides[side - 1][1] * depth + sides[(side + 1) % 6][1] * (tile - 1);
                     int z = sides[side - 1][2] * depth + sides[(side + 1) % 6][2] * (tile - 1);
+                    System.out.println(depth);
                     Tile h = depth == BSIZE / 2 ? new Edge(x, y, z) : new Hexagon(x, y, z);
                     // Convert those cube coordinates to offset coordinates
                     Point p = h.getPosition();
@@ -174,6 +175,15 @@ public class Board extends JPanel {
                     if(tile != null) tile.drawTop(g2, showCircles);
                 }
             }
+
+//            for (Tile[] i : hBoard) {
+//                for (Tile tile : i) {
+//                    if(Edge.startTile != null && tile instanceof Edge) {
+//                        Edge.startTile.drawRayMarker(g2);
+//                    }
+//                }
+//            }
+
             repaint();
         }
 
@@ -186,7 +196,8 @@ public class Board extends JPanel {
                 // Update locationOnHex variable before invoking clicked() method
                 int clickX = e.getX(); // X-coordinate of the click relative to this panel
                 int clickY = e.getY(); // Y-coordinate of the click relative to this panel
-                // System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
+                //USE THIS LATER **************************************************************
+                 System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
                 int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
                 // System.out.println("the mid point y is " + hexMidY);
 
@@ -203,6 +214,12 @@ public class Board extends JPanel {
                 //let boolean right half be true if X coord is > 322
                 Edge.rightHalf= clickX > 322;
 
+               // Edge.locationOnFullHex = y > 255  x< 80 y<494
+                //left side
+                Edge.betweenTopAndBot = (clickX < 80 || clickX>530&& (clickY > 255 && clickY <494));
+                //right side
+                Edge.bottomOfHex = (clickY > 525);
+                //xcord > 530
                 // Call clicked() method after updating locationOnHex
                 if (hBoard[p.x][p.y] != null) {
                     hBoard[p.x][p.y].clicked();
