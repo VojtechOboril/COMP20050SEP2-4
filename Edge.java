@@ -10,8 +10,8 @@ public class Edge extends Tile {
     public Edge(int x, int y, int z) {
         super(x, y, z);
         this.rayCounter = 0;
-        this.topSquarePosition=null;
-        this.bottomSquarePosition=null;
+        this.topSquarePosition = null;
+        this.bottomSquarePosition = null;
     }
 
 
@@ -37,9 +37,16 @@ public class Edge extends Tile {
     @Override
     public void clicked() {
         System.out.println("this is an edge");
-//        this.clickedTopHalf = (clickPoint.y < hexMidY);
-        this.rayCounter = ++globalRayCounter;
         int hexMidY = Hexmech.hexToPixel(this.p.x, this.p.y).y;
+        if (locationOnHex == 1) {
+            this.clickedTopHalf = true;
+        } else {
+            this.clickedTopHalf = false;
+        }
+
+
+        this.rayCounter = ++globalRayCounter;
+
         //set these to be the 2 adj locations if there is more than 2 locations.
         Tile[] adjs = new Tile[2];
         int[] directions = new int[2];
@@ -112,6 +119,22 @@ public class Edge extends Tile {
         }
         startRayPoint = new Point(this.getPosition().x, this.getPosition().y);
         endRayPoint = new Point(this.getPosition().x, this.getPosition().y);
+
+        if (this.clickedTopHalf) {
+            if (this.topSquarePosition == null) {
+                this.topSquarePosition = new Point(this.p.x + 55, hexMidY - 20);
+            } else {
+                // Place a new top square at a fixed distance (e.g., 30 pixels) above the existing one
+                this.topSquarePosition = new Point(this.topSquarePosition.x, this.topSquarePosition.y - 30);
+            }
+        } else {
+            if (this.bottomSquarePosition == null) {
+                this.bottomSquarePosition = new Point(this.p.x + 55, hexMidY + 70);
+            } else {
+                // Place a new bottom square at a fixed distance (e.g., 30 pixels) below the existing one
+                this.bottomSquarePosition = new Point(this.bottomSquarePosition.x, this.bottomSquarePosition.y + 30);
+            }
+        }
     }
 
     @Override
@@ -149,13 +172,6 @@ public class Edge extends Tile {
         //System.out.println("Hexmid coordinates from edge: " + hexMidX + hexMidY);
         //ON LEFT
         if (!Edge.rightHalf) {
-//            //LEFT AND PRESS TOP HALF
-//            if (Edge.locationOnHex == 0) {
-//                g2.drawRect(hexMidX+ 60, hexMidY, 15, 15);
-//                g2.fillRect(hexMidX+ 60, hexMidY, 5, 5);
-//            } else if (Edge.locationOnHex == 1) {
-            //LEFT AND BOTTOM HALF
-            //}
             if (locationOnHex == 0) {
                 // Draw in top half
                 g2.drawRect(hexMidX + 55, hexMidY - 20, 10, 10);
@@ -193,3 +209,29 @@ public class Edge extends Tile {
 
         }
 
+ //   @Override
+//    void drawRayMarker(Graphics2D g2) {
+//        int hexMidY = Hexmech.hexToPixel(this.p.x, this.p.y).y;
+//        int hexMidX = Hexmech.hexToPixel(this.p.x, this.p.y).x;
+//        g2.setColor(Color.blue);
+//
+//        // Draw the top square if it exists
+//        if (this.topSquarePosition != null) {
+//            drawSquare(g2, this.topSquarePosition, this.rayCounter);
+//        }
+//
+//        // Draw the bottom square if it exists
+//        if (this.bottomSquarePosition != null) {
+//            drawSquare(g2, this.bottomSquarePosition, this.rayCounter);
+//        }
+//    }
+//
+//    private void drawSquare(Graphics2D g2, Point position, int label) {
+//        g2.setColor(Color.BLUE);
+//        g2.drawRect(position.x, position.y, 10, 10);
+//        g2.fillRect(position.x, position.y, 10, 10);
+//        g2.setColor(Color.WHITE);
+//        g2.setFont(new Font("Arial", Font.BOLD, 10));
+//        g2.drawString(String.valueOf(label), position.x + 2, position.y + 8);
+//    }
+//}
