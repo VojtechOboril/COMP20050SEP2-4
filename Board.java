@@ -218,6 +218,7 @@ public class Board extends JPanel {
                 Tile currenTile = hBoard[p.x][p.y];
                 if (currenTile != null) {
                     currenTile.clicked();
+                    if(currenTile instanceof Hexagon)
                     wrongGuesses -= ((Hexagon) currenTile).correctlySelected();
                 }
 
