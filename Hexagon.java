@@ -98,6 +98,10 @@ public class Hexagon extends Tile {
         }
     }
 
+    public int correctlySelected() {
+        return (this.value == 0 && !this.active) || (this.value == 8226) ? 1 : -1;
+    }
+
     void drawRayMarker(Graphics2D g2) {
 //
 //        int hexMidY = Hexmech.hexToPixel(p.x, p.y).y;

@@ -3,7 +3,7 @@ import java.awt.*;
 public class Edge extends Tile {
     private int rayCounter;
     private boolean clickedTopHalf;
-    private static int globalRayCounter = 0;
+    public static int globalRayCounter = 0;
     private Point topSquarePosition;
     private Point topSquarePositionStart;
     private Point topSquarePositionEnd;

@@ -1,12 +1,17 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class EndScreen extends JPanel {
+    private JButton menuButton;
+    private static JTextArea scoreText;
+    public static int lastPoints;
     public EndScreen(CardLayout cardLayout, JPanel cardPanel) {
-        JButton menuButton = new JButton("Menu");
+        menuButton = new JButton("Menu");
 
         menuButton.addActionListener(new ActionListener() {
             @Override
@@ -15,7 +20,15 @@ public class EndScreen extends JPanel {
             }
         });
         this.setBackground(Color.BLACK);
-        this.add(menuButton); 
+
+        scoreText = new JTextArea("You scored " + lastPoints + " points!");
+        this.add(scoreText);
+        this.add(menuButton);
+    }
+
+    public static void setLastPoints(int last) {
+        EndScreen.lastPoints = last;
+        scoreText.setText("You scored " + lastPoints + " points!");
     }
     
 }

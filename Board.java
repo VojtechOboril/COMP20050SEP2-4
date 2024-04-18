@@ -18,30 +18,15 @@ public class Board extends JPanel {
     int[] atomArray = new int[6];
     // do we show the circles of influence? currently on true since atoms show by
     // default too
-    boolean showCircles = true;
+    public static boolean showCircles = false;
     Tile[][] hBoard;
-    //Ray[] sentRays;
+    private JFrame frame;
+    private int wrongGuesses;
 
     public Board() {
-        JButton newGameButton = new JButton("Board implementation");
-        newGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                initGame();
-                createAndShowGUI();
-            }
-        });
-        this.add(newGameButton);
-
-        JButton revealAtomsButton = new JButton("reveal atoms");
-        revealAtomsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkAtoms();
-                //showRayPaths
-            }
-        });
-        this.add(revealAtomsButton);
+        // We start with 6 wrong guesses as we have not guessed any atoms yet, therefore we have not guessed 6 of them
+        wrongGuesses = 6;
+        Board.showCircles = false;
     }
 
     void initGame() {
@@ -52,6 +37,10 @@ public class Board extends JPanel {
         Hexmech.setBorders(BORDERS);
         createBoard();
         placeRandomAtoms();
+        
+        wrongGuesses = 6;
+        Board.showCircles = false;
+        Edge.globalRayCounter = 0;
     }
 
     private void createBoard() {
@@ -105,10 +94,16 @@ public class Board extends JPanel {
         }
     }
 
-    private void createAndShowGUI() {
+    public void createAndShowGUI() {
         DrawingPanel panel = new DrawingPanel();
-        JFrame frame = new JFrame("Hex Testing 4");
+        frame = new JFrame("Hex Testing 4");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+        });
         Container content = frame.getContentPane();
         content.add(panel);
         frame.setSize((int) (SCRSIZE / 1.23), SCRSIZE);
@@ -132,7 +127,7 @@ public class Board extends JPanel {
                 ((Hexagon) tile).setActive(true);
                 atomArray[placedAtoms] = placement;
                 // Temporary reveal generated atoms
-                tile.clicked();
+                //tile.clicked();
                 placedAtoms += 1;
                 System.out.println(placement);
             }
@@ -220,8 +215,10 @@ public class Board extends JPanel {
                 Edge.bottomOfHex = (clickY > 525);
                 //xcord > 530
                 // Call clicked() method after updating locationOnHex
-                if (hBoard[p.x][p.y] != null) {
-                    hBoard[p.x][p.y].clicked();
+                Tile currenTile = hBoard[p.x][p.y];
+                if (currenTile != null) {
+                    currenTile.clicked();
+                    wrongGuesses -= ((Hexagon) currenTile).correctlySelected();
                 }
 
                 repaint();
@@ -230,4 +227,12 @@ public class Board extends JPanel {
     } // end of DrawingPanel class
 
 
+    public void exit() {
+        EndScreen.setLastPoints(calculateScore());
+        this.frame.dispose();
+    }
+
+    private int calculateScore() {
+        return Edge.globalRayCounter + this.wrongGuesses * 5;
+    }
 }
