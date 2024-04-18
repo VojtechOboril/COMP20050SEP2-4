@@ -109,9 +109,6 @@ public class Edge extends Tile {
                     this.getAdjacent(r.getDirection()).receiveRay(r);
                 }
 
-                if (this instanceof Edge) {
-                    //startTile = r.getStart();
-                }
                 //startTile = r.getStart();
                 //this prevents function from running twice when we have more than one adjacent hexagon
                 break;
