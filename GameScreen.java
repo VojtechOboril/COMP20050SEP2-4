@@ -22,6 +22,7 @@ public class GameScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 updateGameActive();
                 Board.showCircles = true;
+                EndScreen.setLastPoints(board.calculateScore());
                 //board.exit();
                 cardLayout.show(cardPanel, "EndScreen");
             }

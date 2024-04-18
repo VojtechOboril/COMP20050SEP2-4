@@ -73,6 +73,7 @@ public class Hexagon extends Tile {
     public void drawTop(Graphics2D g2, boolean showCircles) {
         if (showCircles) {
             Point topLeft = Hexmech.hexToPixel(this.p.x, this.p.y);
+            Point center = new Point(topLeft.x + topLeftToCenter, topLeft.y + topLeftToCenter);
             if (this.active) {
                 g2.setColor(Color.RED);
                 Stroke oldStroke = g2.getStroke();
@@ -82,10 +83,11 @@ public class Hexagon extends Tile {
                 g2.drawOval(topLeft.x, topLeft.y, 2 * circleRadius, 2 * circleRadius);
                 // Reset the stroke
                 g2.setStroke(oldStroke);
+
+                g2.fillOval(center.x - 15, center.y - 15, 30, 30);
             }
 
-            // TODO Save and draw lines here that went through
-            Point center = new Point(topLeft.x + topLeftToCenter, topLeft.y + topLeftToCenter);
+
             g2.setColor(Color.black);
             for (int i = 0; i < 6; i++) {
                 if (passedRays[i]) {

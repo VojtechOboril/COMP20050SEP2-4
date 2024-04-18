@@ -228,11 +228,10 @@ public class Board extends JPanel {
 
 
     public void exit() {
-        EndScreen.setLastPoints(calculateScore());
         this.frame.dispose();
     }
 
-    private int calculateScore() {
+    public int calculateScore() {
         return Edge.globalRayCounter + this.wrongGuesses * 5;
     }
 }
