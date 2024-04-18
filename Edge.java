@@ -14,6 +14,7 @@ public class Edge extends Tile {
     private Point bottomSquarePositionEnd;
     public static int locationOnHex;
     public static boolean rightHalf = false;
+    public static boolean bottomRight = false;
 
     public static int locationOnFullHex;
     public static boolean betweenTopAndBot = false;
@@ -77,7 +78,7 @@ public class Edge extends Tile {
             if (adj instanceof Hexagon) {
 
                 //if has 2 adjacent hexagons
-                if (counter == 2 && !rightHalf) {
+                if (counter == 2 && (!rightHalf || bottomRight)){
                     if (locationOnHex == 0) {
                         r.setStart(adjs[0]);
                         r.setDirection(directions[0]);

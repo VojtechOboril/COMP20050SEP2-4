@@ -213,6 +213,7 @@ public class Board extends JPanel {
                 Edge.betweenTopAndBot = (clickX < 80 || clickX>530&& (clickY > 255 && clickY <494));
                 //right side
                 Edge.bottomOfHex = (clickY > 525);
+                Edge.bottomRight = (clickY>526);
                 //xcord > 530
                 // Call clicked() method after updating locationOnHex
                 Tile currenTile = hBoard[p.x][p.y];
