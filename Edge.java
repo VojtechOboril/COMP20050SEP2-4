@@ -35,15 +35,6 @@ public class Edge extends Tile {
     public static Tile endTile = null;
 
 
-    private Point startRayPoint;
-    private Point endRayPoint;
-
-
-    //TODO if there is more than one adjacent hexagon then use locationOnHex variable (0/1)
-    //have variable Tile adj1, adj2
-    //e.g if locationOnHex == 0 then send ray to adj1 else adj2.
-
-
     @Override
     public void clicked() {
         System.out.println("this is an edge");
@@ -127,9 +118,6 @@ public class Edge extends Tile {
             }
         }
 
-        startRayPoint = new Point(this.getPosition().x, this.getPosition().y);
-        endRayPoint = new Point(this.getPosition().x, this.getPosition().y);
-
         int hexMidStartY = Hexmech.hexToPixel(this.startTile.p.x, this.startTile.p.y).y;
         int hexMidStartX = Hexmech.hexToPixel(this.startTile.p.x, this.startTile.p.y).x;
 
@@ -180,7 +168,7 @@ public class Edge extends Tile {
 
     void drawTop(Graphics2D g2, boolean showCircles) {
         //draw any initial lines that went through if showCircles
-        if (startRayPoint != null && endRayPoint != null) {
+        if (startTile != null && endTile != null) {
             drawRayMarker(g2);
         }
     }
