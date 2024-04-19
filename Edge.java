@@ -139,12 +139,13 @@ public class Edge extends Tile {
                 this.rayCounterTop = ++globalRayCounter;
                 if ((this.topSquarePosition == null) && (this.topSquarePositionStart == null) && (this.topSquarePositionEnd == null)) {
                     if(startTile == endTile && rayAbsorbed){
-                        topColourBox = "Red";
+                        this.topColourBox = "Red";
                     }else{
-                        topColourBox = "Blue";
+                        this.topColourBox = "Blue";
                     }
                     this.topSquarePositionStart = new Point(hexMidStartX + 55, hexMidStartY + 40);
                     if (this.endTile != null) {
+                        //IF STATEMENT TO CHECK IF END IS SUPPOSED TO BE TOP OR BOTTOM
                         this.topSquarePositionEnd = new Point(hexMidEndX + 55, hexMidEndY + 40);
                     }
                     this.topSquarePosition = new Point(1, 1);
@@ -155,12 +156,13 @@ public class Edge extends Tile {
                 this.rayCounterBottom = ++globalRayCounter;
                 if (this.bottomSquarePosition == null && (this.bottomSquarePositionStart == null) && (this.bottomSquarePositionEnd == null)) {
                     if(startTile == endTile && rayAbsorbed){
-                        botColourBox = "Red";
+                        this.botColourBox = "Red";
                     }
                     else{
-                        botColourBox = "Blue";
+                        this.botColourBox = "Blue";
                     }
                     this.bottomSquarePositionStart = new Point(hexMidStartX + 55, hexMidStartY + 70);
+                    //IF STATEMENT TO CHECK IF END IS SUPPOSED TO BE TOP OR BOTTOM
                     if (this.endTile != null) {
                         this.bottomSquarePositionEnd = new Point(hexMidEndX + 55, hexMidEndY + 70);
                     }
@@ -168,6 +170,9 @@ public class Edge extends Tile {
                 }
             }
         }
+        System.out.println("COLOUR TESTING");
+        System.out.println(topColourBox);
+        System.out.println(botColourBox);
     }
 
     @Override
@@ -206,37 +211,37 @@ public class Edge extends Tile {
 
         // Draw the top square if it exists
         if (this.topSquarePosition != null) {
-            drawSquare(g2, this.topSquarePositionStart, this.rayCounterTop);
             if (Objects.equals(this.topColourBox, "Blue")) {
                 g2.setColor(Color.blue);
             } else  if (Objects.equals(this.topColourBox, "Red")){
                 g2.setColor(Color.red);
             }
+            drawSquare(g2, this.topSquarePositionStart, this.rayCounterTop);
             if(this.endTile!=null) {
-                drawSquare(g2, this.topSquarePositionEnd, this.rayCounterTop);
                 if (Objects.equals(this.topColourBox, "Blue")) {
                     g2.setColor(Color.blue);
-                } else {
+                } else if (Objects.equals(this.topColourBox, "Red")) {
                     g2.setColor(Color.red);
                 }
+                drawSquare(g2, this.topSquarePositionEnd, this.rayCounterTop);
             }
         }
 
         // Draw the bottom square if it exists
         if (this.bottomSquarePosition != null) {
-            drawSquare(g2, this.bottomSquarePositionStart, this.rayCounterBottom);
             if (Objects.equals(this.botColourBox, "Blue")) {
                 g2.setColor(Color.blue);
-            } else {
+            } else if (Objects.equals(this.botColourBox, "Red")) {
                 g2.setColor(Color.red);
             }
+            drawSquare(g2, this.bottomSquarePositionStart, this.rayCounterBottom);
             if(this.endTile!=null) {
-                drawSquare(g2, this.bottomSquarePositionEnd, this.rayCounterBottom);
                 if (Objects.equals(this.botColourBox, "Blue")) {
                     g2.setColor(Color.blue);
-                } else {
+                } else if (Objects.equals(this.botColourBox, "Red")){
                     g2.setColor(Color.red);
                 }
+                drawSquare(g2, this.bottomSquarePositionEnd, this.rayCounterBottom);
             }
         }
     }
