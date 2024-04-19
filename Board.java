@@ -69,7 +69,7 @@ public class Board extends JPanel {
                     Point p = h.getPosition();
                     if (hBoard[p.x][p.y] != null) {
                         Tile g = hBoard[p.x][p.y];
-                        //System.err.println(String.format("%d %d %d and %d %d %d have the same point %d %d", x, y, z, g.x, g.y, g.z, p.x, p.y));
+                        System.err.println(String.format("%d %d %d and %d %d %d have the same point %d %d", x, y, z, g.x, g.y, g.z, p.x, p.y));
                     }
                     // Add it to the board
                     hBoard[p.x][p.y] = h;
