@@ -22,8 +22,8 @@ public class Edge extends Tile {
     public String topColourBox;
     public String botColourBox;
 
-    public Edge startTile;
-    public Edge endTile = null;
+    public static Edge startTile;
+    public static Edge endTile = null;
 
     public Edge(int x, int y, int z) {
         super(x, y, z);
