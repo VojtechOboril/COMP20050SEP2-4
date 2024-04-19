@@ -1,7 +1,6 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -20,6 +19,7 @@ public class EndScreen extends JPanel {
         gbc.insets = new Insets(10, 0, 10, 0); // Adds space above and below the component
 
         scoreText = new JTextArea("You scored " + lastPoints + " points!");
+        scoreText.setEditable(false);
         scoreText.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(scoreText, gbc);
 
