@@ -15,8 +15,8 @@ public class Edge extends Tile {
     public static int locationOnHex;
     public static boolean rightHalf = false;
     public static boolean bottomRight = false;
+    public boolean rayAbsorbed = false;
 
-    public static int locationOnFullHex;
     public static boolean betweenTopAndBot = false;
     public static boolean bottomOfHex = false;
     public String topColourBox;
@@ -37,8 +37,6 @@ public class Edge extends Tile {
         this.bottomSquarePositionEnd = null;
         this.topColourBox = null;
         this.botColourBox = null;
-        this.endTile = null;
-        this.startTile = null;
     }
 
 
@@ -124,6 +122,7 @@ public class Edge extends Tile {
                 }
 
                 if(r.getResult()==Result.ABSORBED) {
+                    rayAbsorbed = true;
                     this.endTile = null;
                     System.out.println("ABSORBED AND ENDTILE SHOULD BE NULL");
                 }
@@ -150,7 +149,7 @@ public class Edge extends Tile {
             if(rayCounterTop == 0) {
                 this.rayCounterTop = ++globalRayCounter;
                 if ((this.topSquarePosition == null) && (this.topSquarePositionStart == null) && (this.topSquarePositionEnd == null)) {
-                    if(startTile == endTile){
+                    if(startTile == endTile && rayAbsorbed){
                         topColourBox = "Red";
                     }else{
                         topColourBox = "Blue";
@@ -166,7 +165,7 @@ public class Edge extends Tile {
             if (rayCounterBottom == 0) {
                 this.rayCounterBottom = ++globalRayCounter;
                 if (this.bottomSquarePosition == null && (this.bottomSquarePositionStart == null) && (this.bottomSquarePositionEnd == null)) {
-                    if(startTile == endTile){
+                    if(startTile == endTile && rayAbsorbed){
                         botColourBox = "Red";
                     }
                     else{
@@ -221,7 +220,7 @@ public class Edge extends Tile {
             drawSquare(g2, this.topSquarePositionStart, this.rayCounterTop);
             if (Objects.equals(this.topColourBox, "Blue")) {
                 g2.setColor(Color.blue);
-            } else {
+            } else  if (Objects.equals(this.topColourBox, "Red")){
                 g2.setColor(Color.red);
             }
             if(this.endTile!=null) {
