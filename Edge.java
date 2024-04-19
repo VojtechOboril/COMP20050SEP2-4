@@ -46,9 +46,6 @@ public class Edge extends Tile {
         this.endTile = null;
         this.startTile = null;
 
-
-
-        System.out.println("this is an edge");
         if (locationOnHex == 0) {
             this.clickedTopHalf = true;
         } else {
@@ -87,8 +84,9 @@ public class Edge extends Tile {
                         r.setDirection(directions[0]);
                     }
                 }
-
-                System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
+                if(!(!clickedTopHalf&&counter==1)) {
+                    System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
+                }
                 this.startTile = this;
                 this.endTile = this;
                 // check if there is an atom right next to it, resulting in a reflection or absorbtion
@@ -102,13 +100,15 @@ public class Edge extends Tile {
                             reflected = true;
                     }
                 }
-                if (absorbed) {
-                    r.setEnd(this.getAdjacent(r.getDirection()));
-                    r.setResult(Result.ABSORBED);
-                } else if (reflected) {
-                    this.receiveRay(r);
-                } else {
-                    this.getAdjacent(r.getDirection()).receiveRay(r);
+                if(!(!clickedTopHalf&&counter==1)) {
+                    if (absorbed) {
+                        r.setEnd(this.getAdjacent(r.getDirection()));
+                        r.setResult(Result.ABSORBED);
+                    } else if (reflected) {
+                        this.receiveRay(r);
+                    } else {
+                        this.getAdjacent(r.getDirection()).receiveRay(r);
+                    }
                 }
 
                 if(r.getResult()==Result.ABSORBED) {
@@ -134,6 +134,7 @@ public class Edge extends Tile {
         int hexMidEndY = Hexmech.hexToPixel(this.endTile.p.x, this.endTile.p.y).y;
         int hexMidEndX = Hexmech.hexToPixel(this.endTile.p.x, this.endTile.p.y).x;
 
+
         if (this.clickedTopHalf) {
             if(rayCounterTop == 0) {
                 this.rayCounterTop = ++globalRayCounter;
@@ -152,7 +153,7 @@ public class Edge extends Tile {
                 }
             }
         }else {
-            if (rayCounterBottom == 0) {
+            if (rayCounterBottom == 0 && counter == 2) {
                 this.rayCounterBottom = ++globalRayCounter;
                 if (this.bottomSquarePosition == null && (this.bottomSquarePositionStart == null) && (this.bottomSquarePositionEnd == null)) {
                     if(startTile == endTile && rayAbsorbed){
@@ -166,13 +167,11 @@ public class Edge extends Tile {
                     if (this.endTile != null) {
                         this.bottomSquarePositionEnd = new Point(hexMidEndX + 55, hexMidEndY + 70);
                     }
+
                     this.bottomSquarePosition = new Point(1, 1);
                 }
             }
         }
-        System.out.println("COLOUR TESTING");
-        System.out.println(topColourBox);
-        System.out.println(botColourBox);
     }
 
     @Override
@@ -204,9 +203,6 @@ public class Edge extends Tile {
 
     @Override
     void drawRayMarker(Graphics2D g2) {
-        //System.out.println(this.endTile);
-//        int hexMidY = Hexmech.hexToPixel(this.p.x, this.p.y).y;
-//        int hexMidX = Hexmech.hexToPixel(this.p.x, this.p.y).x;
         g2.setColor(Color.blue);
 
         // Draw the top square if it exists

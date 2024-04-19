@@ -129,7 +129,6 @@ public class Board extends JPanel {
                 // Temporary reveal generated atoms
                 //tile.clicked();
                 placedAtoms += 1;
-                System.out.println(placement);
             }
         }
     }
@@ -141,7 +140,6 @@ public class Board extends JPanel {
             int y = atomArray[i] / BSIZE;
             Tile tile = hBoard[x][y];
             tile.clicked();
-            System.out.println(atomArray[i]);
         }
     }
 
@@ -191,18 +189,15 @@ public class Board extends JPanel {
                 int clickX = e.getX(); // X-coordinate of the click relative to this panel
                 int clickY = e.getY(); // Y-coordinate of the click relative to this panel
                 //USE THIS LATER **************************************************************
-                 System.out.println("Xcord=" + clickX + "\nYcord=" + clickY);
                 int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
-                // System.out.println("the mid point y is " + hexMidY);
+
 
                 // Compare clickY with the midpoint Y-coordinate of the hexagon
                 if (clickY < hexMidY) {
                     // Click is above the midpoint
-                    System.out.println("Clicked above the midpoint of the hexagon.");
                     Edge.locationOnHex = 0;
                 } else {
                     // Click is below the midpoint
-                    System.out.println("Clicked below the midpoint of the hexagon.");
                     Edge.locationOnHex = 1;
                 }
                 //let boolean right half be true if X coord is > 322
