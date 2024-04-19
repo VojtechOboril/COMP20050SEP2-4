@@ -187,7 +187,7 @@ public class Edge extends Tile {
 
     @Override
     public void drawBottom(Graphics2D g2, boolean showCircles) {
-        // showCircles unused here
+        // showCircles unused here, but needs to stay due to it extending tile
         // TODO change this to draw it in 2 halves
         Hexmech.drawHex(this.p.x, this.p.y, g2);
         Hexmech.fillHex(this.p.x, this.p.y, this.value, g2);

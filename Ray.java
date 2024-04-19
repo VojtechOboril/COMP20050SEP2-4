@@ -2,8 +2,6 @@ public class Ray {
     private Tile start, end;
     private int direction;
     private Result result;
-    //path
-    // TODO
 
     public Ray(Tile start, int direction) {
         this.start = start;

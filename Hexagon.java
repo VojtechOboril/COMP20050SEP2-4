@@ -14,7 +14,7 @@ public class Hexagon extends Tile {
     @Override
     public void clicked() {
         if (this.value == 0) {
-            if (this.active) {
+            if (this.active && Board.showCircles) {
                 this.value = 8226; //(int)'•'
             } else {
                 this.value = 120; //(int)'x'
@@ -93,7 +93,7 @@ public class Hexagon extends Tile {
                 if (passedRays[i]) {
                     int x = (hexagonPoints.xpoints[i] + hexagonPoints.xpoints[(i + 1) % 6]) / 2;
                     int y = (hexagonPoints.ypoints[i] + hexagonPoints.ypoints[(i + 1) % 6]) / 2;
-
+                    g2.setColor(Color.red);
                     g2.drawLine(center.x, center.y, x, y);
                 }
             }
