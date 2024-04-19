@@ -59,14 +59,12 @@ public class Edge extends Tile {
 
 
         //set these to be the 2 adj locations if there is more than 2 locations.
-        Tile[] adjs = new Tile[2];
         int[] directions = new int[2];
         //check how many adjacents there are, then save them into the array 'adjs'
         int counter = 0;
         for (int i = 0; i < 6; i++) {
             Tile adj = this.getAdjacent(i);
             if (adj instanceof Hexagon) {
-                adjs[counter] = adj;
                 directions[counter] = i;
                 counter++;
             }
@@ -80,23 +78,15 @@ public class Edge extends Tile {
                 //if has 2 adjacent hexagons
                 if (counter == 2 && (!rightHalf || bottomRight)){
                     if (locationOnHex == 0) {
-                        r.setStart(adjs[0]);
                         r.setDirection(directions[0]);
-                        System.out.println("direction=" + directions[0]);
                     } else if (locationOnHex == 1) {
-                        r.setStart(adjs[1]);
                         r.setDirection(directions[1]);
-                        System.out.println("direction=" + directions[1]);
                     }
                 } else if (counter == 2 && rightHalf) {
                     if (locationOnHex == 0) {
-                        r.setStart(adjs[1]);
                         r.setDirection(directions[1]);
-                        System.out.println("direction=" + directions[1]);
                     } else if (locationOnHex == 1) {
-                        r.setStart(adjs[0]);
                         r.setDirection(directions[0]);
-                        System.out.println("direction=" + directions[0]);
                     }
                 }
 
@@ -125,7 +115,6 @@ public class Edge extends Tile {
 
                 if(r.getResult()==Result.ABSORBED) {
                     this.endTile = null;
-                    System.out.println("ABSORBED AND ENDTILE SHOULD BE NULL");
                 }
                 //startTile = r.getStart();
                 //this prevents function from running twice when we have more than one adjacent hexagon
