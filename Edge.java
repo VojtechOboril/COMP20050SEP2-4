@@ -43,8 +43,8 @@ public class Edge extends Tile {
 
     @Override
     public void clicked() {
-        this.endTile = null;
-        this.startTile = null;
+        Edge.endTile = null;
+        Edge.startTile = null;
 
         if (locationOnHex == 0) {
             this.clickedTopHalf = true;
@@ -87,8 +87,8 @@ public class Edge extends Tile {
                 if(!(!clickedTopHalf&&counter==1)) {
                     //System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
                 }
-                this.startTile = this;
-                this.endTile = this;
+                Edge.startTile = this;
+                Edge.endTile = this;
                 // check if there is an atom right next to it, resulting in a reflection or absorbtion
                 boolean reflected = false;
                 boolean absorbed = false;
@@ -96,7 +96,7 @@ public class Edge extends Tile {
                     // if one of the tiles in the direction of the beam has an atom
                     if (this.getAdjacent((j + 6) % 6) instanceof Hexagon && ((Hexagon) this.getAdjacent((j + 6) % 6)).getActive()) {
                         if (j == r.getDirection()) absorbed = true;
-                        this.endTile = null;
+                        Edge.endTile = null;
                             reflected = true;
                     }
                 }
@@ -113,7 +113,7 @@ public class Edge extends Tile {
 
                 if(r.getResult()==Result.ABSORBED) {
                     rayAbsorbed = true;
-                    this.endTile = null;
+                    Edge.endTile = null;
                 }
                 //startTile = r.getStart();
                 //this prevents function from running twice when we have more than one adjacent hexagon
@@ -122,17 +122,17 @@ public class Edge extends Tile {
         }
 
 
-        int hexMidStartY = Hexmech.hexToPixel(this.startTile.p.x, this.startTile.p.y).y;
-        int hexMidStartX = Hexmech.hexToPixel(this.startTile.p.x, this.startTile.p.y).x;
+        int hexMidStartY = Hexmech.hexToPixel(Edge.startTile.p.x, Edge.startTile.p.y).y;
+        int hexMidStartX = Hexmech.hexToPixel(Edge.startTile.p.x, Edge.startTile.p.y).x;
 
 
-        if(this.endTile == null){
-            this.endTile = this.startTile;
+        if(Edge.endTile == null){
+            Edge.endTile = Edge.startTile;
         }
 
 
-        int hexMidEndY = Hexmech.hexToPixel(this.endTile.p.x, this.endTile.p.y).y;
-        int hexMidEndX = Hexmech.hexToPixel(this.endTile.p.x, this.endTile.p.y).x;
+        int hexMidEndY = Hexmech.hexToPixel(Edge.endTile.p.x, Edge.endTile.p.y).y;
+        int hexMidEndX = Hexmech.hexToPixel(Edge.endTile.p.x, Edge.endTile.p.y).x;
 
 
         if (this.clickedTopHalf) {
@@ -145,7 +145,7 @@ public class Edge extends Tile {
                         this.topColourBox = "Blue";
                     }
                     this.topSquarePositionStart = new Point(hexMidStartX + 55, hexMidStartY + 40);
-                    if (this.endTile != null) {
+                    if (Edge.endTile != null) {
                         //IF STATEMENT TO CHECK IF END IS SUPPOSED TO BE TOP OR BOTTOM
                         this.topSquarePositionEnd = new Point(hexMidEndX + 55, hexMidEndY + 40);
                     }
@@ -164,7 +164,7 @@ public class Edge extends Tile {
                     }
                     this.bottomSquarePositionStart = new Point(hexMidStartX + 55, hexMidStartY + 70);
                     //IF STATEMENT TO CHECK IF END IS SUPPOSED TO BE TOP OR BOTTOM
-                    if (this.endTile != null) {
+                    if (Edge.endTile != null) {
                         this.bottomSquarePositionEnd = new Point(hexMidEndX + 55, hexMidEndY + 70);
                     }
 
@@ -177,7 +177,7 @@ public class Edge extends Tile {
     @Override
     public void receiveRay(Ray r) {
         r.setEnd(this);
-        this.endTile = this;
+        Edge.endTile = this;
         if (r.getStart() == r.getEnd()) {
             r.setResult(Result.REFLECTION);
         } else {
@@ -194,7 +194,7 @@ public class Edge extends Tile {
     }
     @Override
     void drawTop(Graphics2D g2, boolean showCircles) {
-        if (this.startTile != null && this.endTile != null) {
+        if (Edge.startTile != null && Edge.endTile != null) {
             drawRayMarker(g2);
         }
     }
@@ -213,7 +213,7 @@ public class Edge extends Tile {
                 g2.setColor(Color.red);
             }
             drawSquare(g2, this.topSquarePositionStart, this.rayCounterTop);
-            if(this.endTile!=null) {
+            if(Edge.endTile!=null) {
                 if (Objects.equals(this.topColourBox, "Blue")) {
                     g2.setColor(Color.blue);
                 } else if (Objects.equals(this.topColourBox, "Red")) {
@@ -231,7 +231,7 @@ public class Edge extends Tile {
                 g2.setColor(Color.red);
             }
             drawSquare(g2, this.bottomSquarePositionStart, this.rayCounterBottom);
-            if(this.endTile!=null) {
+            if(Edge.endTile!=null) {
                 if (Objects.equals(this.botColourBox, "Blue")) {
                     g2.setColor(Color.blue);
                 } else if (Objects.equals(this.botColourBox, "Red")){
