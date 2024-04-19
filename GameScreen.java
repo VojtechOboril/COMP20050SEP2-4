@@ -36,7 +36,6 @@ public class GameScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 updateGameActive();
                 board.initGame();
-                title.setText("Game in Progress.");
                 board.createAndShowGUI();
             }
         });
@@ -76,5 +75,6 @@ public class GameScreen extends JPanel {
         this.isGameActive = !this.isGameActive;
         this.endGameButton.setVisible(this.isGameActive);
         this.newGameButton.setVisible(!this.isGameActive);
+        this.title.setText(this.isGameActive ? "Game in Progress." : "Press to begin...");
     }
 }
