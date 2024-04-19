@@ -85,7 +85,7 @@ public class Edge extends Tile {
                     }
                 }
                 if(!(!clickedTopHalf&&counter==1)) {
-                    System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
+                    //System.out.println("Ray started at " + this + " with the direction of " + r.getDirection());
                 }
                 this.startTile = this;
                 this.endTile = this;

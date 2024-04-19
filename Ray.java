@@ -33,7 +33,7 @@ public class Ray {
 
     public void setResult(Result r) {
         this.result = r;
-        System.out.println("Ray started at " + this.getStart() + " and ended at " + this.getEnd() + " with the result of " + this.getResult());
+        //System.out.println("Ray started at " + this.getStart() + " and ended at " + this.getEnd() + " with the result of " + this.getResult());
     }
 
     public Result getResult() {

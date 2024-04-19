@@ -101,9 +101,10 @@ public class Hexagon extends Tile {
     }
 
     public int correctlySelected() {
-        return (this.value == 0 && !this.active) || (this.value == 8226) ? 1 : -1;
+        return (this.value == 0 && !this.active) || (this.value == 120 && this.active) ? 1 : -1;
     }
 
+    // just so that Edge can inherit it from Tile
     void drawRayMarker(Graphics2D g2) {
 
     }
