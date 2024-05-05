@@ -1,6 +1,11 @@
 import java.awt.*;
 import java.util.Objects;
 
+/**
+ * This class deals with the edge hexagons in the game ie. the hexagons on the perimeter
+ * It deals with where the rays start and end along with drawing ray markers in the according places.
+ */
+
 public class Edge extends Tile {
     private int rayCounterTop;
     private int rayCounterBottom;
@@ -25,6 +30,14 @@ public class Edge extends Tile {
     public static Edge startTile;
     public static Edge endTile = null;
 
+    /**
+     * Constructs an Edge object with specified coordinates.
+     * Sets a lot of variables to a default value
+     *
+     * @param x The x-coordinate.
+     * @param y The y-coordinate.
+     * @param z The z-coordinate.
+     */
     public Edge(int x, int y, int z) {
         super(x, y, z);
         this.rayCounterTop = 0;
@@ -40,7 +53,13 @@ public class Edge extends Tile {
     }
 
 
-
+    /**
+     * This method handles what happens when an edge it clicked
+     * Firstly checks which half of the hexagon we click (upper/lower half)
+     * Then checks how many adjacent hexagons (not edges) the pressed hexagon has (it will be either 2 or 1(if it is an edge in a corner))
+     * Then sets the direction of the ray and its end status (eg if the ray got absorbed) We use this later when creating ray markers
+     * Afterwards we calculate and change the variables to get the start position and end position of where the ray marker will be placed
+     */
     @Override
     public void clicked() {
         Edge.endTile = null;
@@ -115,7 +134,6 @@ public class Edge extends Tile {
                     rayAbsorbed = true;
                     Edge.endTile = null;
                 }
-                //startTile = r.getStart();
                 //this prevents function from running twice when we have more than one adjacent hexagon
                 break;
             }
@@ -174,6 +192,12 @@ public class Edge extends Tile {
         }
     }
 
+    /**
+     * Receives a ray and updates the end tile accordingly.
+     * checks where the end tile is and its status, which is used when creating ray markers
+     *
+     * @param r The incoming ray.
+     */
     @Override
     public void receiveRay(Ray r) {
         r.setEnd(this);
@@ -184,25 +208,40 @@ public class Edge extends Tile {
             r.setResult(Result.DETOUR);
         }
     }
-
+    /**
+     * Method used to draw the edge hexagons.
+     *
+     * @param g2           The graphics context.
+     * @param showCircles  Indicates whether to show circles or not.
+     */
     @Override
     public void drawBottom(Graphics2D g2, boolean showCircles) {
         // showCircles unused here, but needs to stay due to it extending tile
-        // TODO change this to draw it in 2 halves
         Hexmech.drawHex(this.p.x, this.p.y, g2);
         Hexmech.fillHex(this.p.x, this.p.y, this.value, g2);
     }
+
+    /**
+     * Method to draw ray markers
+     *
+     * @param g2           The graphics context.
+     * @param showCircles  Indicates whether to show circles or not.
+     */
     @Override
-    void drawTop(Graphics2D g2, boolean showCircles) {
+    public void drawTop(Graphics2D g2, boolean showCircles) {
+        // showCircles once again unused here, but needs to stay due to it extending tile
         if (Edge.startTile != null && Edge.endTile != null) {
             drawRayMarker(g2);
         }
     }
-
-
-
+    /**
+     * Draws ray markers on the edge tile.
+     * Changes colour accordingly if ray got absorbed or reflected
+     *
+     * @param g2 The graphics context.
+     */
     @Override
-    void drawRayMarker(Graphics2D g2) {
+    public void drawRayMarker(Graphics2D g2) {
         g2.setColor(Color.blue);
 
         // Draw the top square if it exists
@@ -241,8 +280,14 @@ public class Edge extends Tile {
             }
         }
     }
-
-    private void drawSquare(Graphics2D g2, Point position, int label) {
+    /**
+     * Draws a ray marker with the given label in a given position
+     *
+     * @param g2       The graphics context.
+     * @param position The position of the square.
+     * @param label    The label for the square.
+     */
+    public void drawSquare(Graphics2D g2, Point position, int label) {
         g2.fillRect(position.x, position.y, 10, 10);
         g2.setColor(Color.WHITE);
         g2.drawRect(position.x, position.y, 10, 10);

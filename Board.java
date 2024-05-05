@@ -201,7 +201,8 @@ public class Board extends JPanel {
                 }
                 //let boolean right half be true if X coord is > 322
                 Edge.rightHalf= clickX > 322;
-
+//                System.out.println("Y direction:" + clickY);
+//                System.out.println("X direction"+ clickX);
                // Edge.locationOnFullHex = y > 255  x< 80 y<494
                 //left side
                 Edge.betweenTopAndBot = (clickX < 80 || clickX>530&& (clickY > 255 && clickY <494));
