@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Test;
-import java.awt.*;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TileTests {
