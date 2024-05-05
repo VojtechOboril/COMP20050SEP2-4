@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
+/**
+ * Class deals with creating the base hexagon board which we use to play the game.
+ *
+ */
 public class Board extends JPanel {
     final static int BSIZE = 11; // board size. controls the number hexagons. Only works with odd numbers
     final static Color COLOURBACK = Color.BLACK;
@@ -23,12 +27,17 @@ public class Board extends JPanel {
     private JFrame frame;
     private int wrongGuesses;
 
+    /**
+     * Initializes the game board.
+     */
     public Board() {
         // We start with 6 wrong guesses as we have not guessed any atoms yet, therefore we have not guessed 6 of them
         wrongGuesses = 6;
         Board.showCircles = false;
     }
-
+    /**
+     * Initializes the game by creating the board and placing atoms randomly.
+     */
     void initGame() {
 
         Hexmech.setXYasVertex(false); // RECOMMENDED: leave this as FALSE.
@@ -42,7 +51,9 @@ public class Board extends JPanel {
         Board.showCircles = false;
         Edge.globalRayCounter = 0;
     }
-
+    /**
+     * Creates the game board, doesn't contain atoms
+     */
     private void createBoard() {
         hBoard = new Tile[BSIZE][BSIZE];
         // temporary way to save board to link hexagons together
@@ -92,10 +103,13 @@ public class Board extends JPanel {
             }
         }
     }
-
+    /**
+     * Creates and shows the GUI for the game.
+     * Uses variables defined in Board to get the screen size along with dealing with what happens when the game gets closed
+     */
     public void createAndShowGUI() {
         DrawingPanel panel = new DrawingPanel();
-        frame = new JFrame("Hex Testing 4");
+        frame = new JFrame("Black Box+");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             @Override
@@ -110,7 +124,9 @@ public class Board extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
+    /**
+     * Using the size of the board, randomly places atoms on the board we created
+     */
     void placeRandomAtoms() {
         Random random = new Random();
         int placedAtoms = 0;
@@ -131,7 +147,9 @@ public class Board extends JPanel {
             }
         }
     }
-
+    /**
+     * Toggles the display of atoms on the board.
+     */
     void checkAtoms() {
         showCircles = !showCircles;
         for (int i = 0; i < atomArray.length; i++) {
@@ -141,15 +159,26 @@ public class Board extends JPanel {
             tile.clicked();
         }
     }
-
+    /**
+     * Represents the drawing panel for rendering the game board.
+     */
     class DrawingPanel extends JPanel {
+        /**
+         * Constructs a new DrawingPanel object.
+         * Sets the background color and adds a mouse listener.
+         */
         public DrawingPanel() {
             setBackground(COLOURBACK);
 
             MyMouseListener ml = new MyMouseListener();
             addMouseListener(ml);
         }
-
+        /**
+         * Overrides the paintComponent method to render the game board.
+         * Draws the bottom and top layers of tiles on the board.
+         *
+         * @param g the Graphics object used for drawing
+         */
         public void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -167,18 +196,18 @@ public class Board extends JPanel {
                 }
             }
 
-//            for (Tile[] i : hBoard) {
-//                for (Tile tile : i) {
-//                    if(Edge.startTile != null && tile instanceof Edge) {
-//                        Edge.startTile.drawRayMarker(g2);
-//                    }
-//                }
-//            }
-
             repaint();
         }
-
+        /**
+         * Represents a mouse listener for handling mouse events on the drawing panel.
+         */
         class MyMouseListener extends MouseAdapter { // inner class inside DrawingPanel
+            /**
+             * Handles mouseClicked events on the drawing panel.
+             * Determines the clicked tile and invokes its clicked() method.
+             *
+             * @param e the MouseEvent object representing the mouse click event
+             */
             public void mouseClicked(MouseEvent e) {
                 Point p = new Point(Hexmech.pxtoHex(e.getX(), e.getY()));
                 if (p.x < 0 || p.y < 0 || p.x >= BSIZE || p.y >= BSIZE)
@@ -187,7 +216,7 @@ public class Board extends JPanel {
                 // Update locationOnHex variable before invoking clicked() method
                 int clickX = e.getX(); // X-coordinate of the click relative to this panel
                 int clickY = e.getY(); // Y-coordinate of the click relative to this panel
-                //USE THIS LATER **************************************************************
+
                 int hexMidY = Hexmech.hexToPixel(p.x, p.y).y + 60;
 
 
@@ -223,11 +252,17 @@ public class Board extends JPanel {
         } // end of MyMouseListener class
     } // end of DrawingPanel class
 
-
+    /**
+     * Exits the game by disposing the frame.
+     */
     public void exit() {
         this.frame.dispose();
     }
-
+    /**
+     * Calculates the score based on the number of global ray counters and wrong guesses.
+     *
+     * @return the calculated score
+     */
     public int calculateScore() {
         return Edge.globalRayCounter + this.wrongGuesses * 5;
     }

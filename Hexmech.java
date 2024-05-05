@@ -10,14 +10,7 @@ http://weblogs.java.net/blog/malenkov/archive/2009/02/hexagonal_tile.html
 http://www.tonypa.pri.ee/tbw/tut25.html
 	 */
 
-	/*
-#define HEXEAST 0
-#define HEXSOUTHEAST 1
-#define HEXSOUTHWEST 2
-#define HEXWEST 3
-#define HEXNORTHWEST 4
-#define HEXNORTHEAST 5
-	 */
+
 
     //Constants
     public final static boolean orFLAT= true;
@@ -156,7 +149,7 @@ http://www.tonypa.pri.ee/tbw/tut25.html
             g2.fillPolygon(hex(x,y));
             g2.setColor(Board.COLOURONETXT);
             c = (char)(-n);
-            g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4); //FIXME: handle XYVertex
+            g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4);
             //g2.drawString(x+","+y, x+r+BORDERS, y+r+BORDERS+4);
         }
         if (n > 0) {
@@ -164,7 +157,7 @@ http://www.tonypa.pri.ee/tbw/tut25.html
             g2.fillPolygon(hex(x,y));
             g2.setColor(Board.COLOURTWOTXT);
             c = (char)n;
-            g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4); //FIXME handle XYVertex
+            g2.drawString(""+c, x+r+BORDERS, y+r+BORDERS+4);
             //g2.drawString(i+","+j, x+r+BORDERS, y+r+BORDERS+4);
         }
     }
