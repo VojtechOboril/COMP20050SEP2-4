@@ -1,0 +1,7 @@
+# Ignore Javadoc-generated files
+*.html
+*.css
+*.js
+*.svg
+*.md
+*.xml
