@@ -5,3 +5,5 @@
 *.svg
 *.md
 *.xml
+
+.vscode

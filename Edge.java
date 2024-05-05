@@ -9,14 +9,14 @@ import java.util.Objects;
 public class Edge extends Tile {
     private int rayCounterTop;
     private int rayCounterBottom;
-    private boolean clickedTopHalf;
+    boolean clickedTopHalf;
     public static int globalRayCounter = 0;
-    private Point topSquarePosition;
+    Point topSquarePosition;
     private Point topSquarePositionStart;
     private Point topSquarePositionEnd;
     private Point bottomSquarePosition;
     private Point bottomSquarePositionStart;
-    private Point bottomSquarePositionEnd;
+    Point bottomSquarePositionEnd;
     public static int locationOnHex;
     public static boolean rightHalf = false;
     public static boolean bottomRight = false;
