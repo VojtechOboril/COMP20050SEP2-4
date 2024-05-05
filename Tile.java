@@ -1,6 +1,8 @@
 import java.awt.*;
+
 /**
- * Represents a tile on the game board, which can be either a hexagon or an edge.
+ * Represents a tile on the game board, which can be either a hexagon or an
+ * edge.
  */
 abstract class Tile {
     // adjacent hexagons
@@ -13,6 +15,7 @@ abstract class Tile {
     // What should be displayed when clicked?
     protected int value;
     protected final Polygon hexagonPoints;
+
     /**
      * Constructs a tile with given coordinates.
      *
@@ -27,20 +30,23 @@ abstract class Tile {
 
         this.convertPosition();
 
-        int x0 = p.x * (Hexmech.s+Hexmech.t);
-        int y0 = p.y * Hexmech.h + (p.x%2) * Hexmech.h/2;
+        int x0 = p.x * (Hexmech.s + Hexmech.t);
+        int y0 = p.y * Hexmech.h + (p.x % 2) * Hexmech.h / 2;
         this.hexagonPoints = Hexmech.hex(x0, y0);
     }
+
     /**
      * Handles the reception of a ray by the tile.
      *
      * @param r The ray to be received.
      */
     abstract void receiveRay(Ray r);
+
     /**
      * Handles the action when the tile is clicked.
      */
     abstract void clicked();
+
     /**
      * Draws the bottom layer of the tile
      *
@@ -48,24 +54,29 @@ abstract class Tile {
      * @param showCircles Flag indicating whether to show circles of influence.
      */
     abstract void drawBottom(Graphics2D g2, boolean showCircles);
+
     /**
-     * Draws the top layer of the tile i.e ray marker if on edge, else draws stuff like circles of influence
+     * Draws the top layer of the tile i.e ray marker if on edge, else draws stuff
+     * like circles of influence
      *
      * @param g2          The graphics context to draw on.
      * @param showCircles Flag indicating whether to show circles of influence.
      */
     abstract void drawTop(Graphics2D g2, boolean showCircles);
+
     /**
      * Draws the ray marker on the tile.
      *
      * @param g2 The graphics context to draw on.
      */
     abstract void drawRayMarker(Graphics2D g2);
+
     /**
      * Sets an adjacent tile in a specified direction.
      *
-     * @param adj        The tile to set as adjacent.
-     * @param direction  The direction to set the adjacent tile. (0 = north, and then counterclockwise up to 5 = northeast)
+     * @param adj       The tile to set as adjacent.
+     * @param direction The direction to set the adjacent tile. (0 = north, and then
+     *                  counterclockwise up to 5 = northeast)
      */
     public void setAdjacent(Tile adj, int direction) {
         switch (direction) {
@@ -99,28 +110,33 @@ abstract class Tile {
         return this.p;
     }
 
-    // suppressing warnings because bsize is final, and it never expects it to hit the first condition
+    // suppressing warnings because bsize is final, and it never expects it to hit
+    // the first condition
     @SuppressWarnings("all")
     /**
      * Converts the position of the tile to offset coordinates.
      */
     public void convertPosition() {
         int yOffset;
-        if(this.z > this.x && (Board.BSIZE/2)%2 == 0) {
-            // -1 here acts as ceiling function, because the board is a bit biased to higher numbers(bottom right y coordinates are 6 6 7 7 8)
-            yOffset = (this.x-this.z - 1)/2;
-        } else if (this.z < this.x && (Board.BSIZE/2)%2 == 1) {
-            // +1 here is again a floor-ish function, and it is divided like this, because 4n+1 sized boards behave a bit differently than 4n+3 sized boards
-            yOffset = (this.x-this.z + 1)/2;
+        if (this.z > this.x && (Board.BSIZE / 2) % 2 == 0) {
+            // -1 here acts as ceiling function, because the board is a bit biased to higher
+            // numbers(bottom right y coordinates are 6 6 7 7 8)
+            yOffset = (this.x - this.z - 1) / 2;
+        } else if (this.z < this.x && (Board.BSIZE / 2) % 2 == 1) {
+            // +1 here is again a floor-ish function, and it is divided like this, because
+            // 4n+1 sized boards behave a bit differently than 4n+3 sized boards
+            yOffset = (this.x - this.z + 1) / 2;
         } else {
-            yOffset = (this.x-this.z)/2;
+            yOffset = (this.x - this.z) / 2;
         }
-        this.p = new Point(Board.BSIZE/2 + this.y, Board.BSIZE/2 + yOffset);
+        this.p = new Point(Board.BSIZE / 2 + this.y, Board.BSIZE / 2 + yOffset);
     }
+
     /**
      * Gets the adjacent tile in the specified direction.
      *
-     * @param direction The direction to get the adjacent tile. (0 = north, and then counterclockwise up to 5 = northeast)
+     * @param direction The direction to get the adjacent tile. (0 = north, and then
+     *                  counterclockwise up to 5 = northeast)
      * @return The adjacent tile.
      */
     public Tile getAdjacent(int direction) {
@@ -141,6 +157,7 @@ abstract class Tile {
                 return null;
         }
     }
+
     /**
      * Gets the value of the tile.
      *
@@ -149,6 +166,7 @@ abstract class Tile {
     public int getValue() {
         return this.value;
     }
+
     /**
      * Sets the value of the tile.
      *

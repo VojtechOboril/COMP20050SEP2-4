@@ -32,5 +32,4 @@ public class HexagonTests {
         assertFalse(hexagon.getActive());
     }
 
-    
 }
