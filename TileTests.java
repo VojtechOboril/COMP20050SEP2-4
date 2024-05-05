@@ -26,8 +26,6 @@ public class TileTests {
         assertEquals(5, tile.getValue());
     }
 
-    // More test cases...
-
     // Inner class for testing Tile abstract class
     private static class TestTile extends Tile {
         public TestTile(int x, int y, int z) {
